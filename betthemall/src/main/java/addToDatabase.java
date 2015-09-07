@@ -5,11 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-	/**Klasa addToDatabase ³¹czy siê z baz¹ danych.
-	 * Posiada metody:
-	 * 		dodania meczu do bazy danych,
-	 * 		dodania dru¿yny do bazy
-	 * 		wkrótce wiêcej ;)*/
+	/**Class addToDatabase connecting with database.
+	 * Methods:
+	 * 		adding match to database,
+	 * 		adding team to database*/
 public class addToDatabase {
 	
 	 private static final String DRIVER = "org.postgresql.Driver";   
@@ -33,9 +32,6 @@ public class addToDatabase {
 	    return conn;   
 	 } 
 	 
-	 /**Konstruktor klasy addToDatabase
-	  * ³¹czy siê z baz¹ danych
-	 * @throws FileNotFoundException */
 	 public addToDatabase(){
 		
 	 } 
@@ -78,7 +74,7 @@ public class addToDatabase {
 					stmt = connection.createStatement();
 					
 					
-					/**Jeœli w bazie nie ma dru¿yny A to j¹ dodaje do bazy.*/
+					/**If team A isn't exist in the database, insert team A to the database*/
 					sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamA() + "'";//System.out.println(sql);
 					rs = stmt.executeQuery(sql);
 					t = rs.next();
@@ -90,7 +86,7 @@ public class addToDatabase {
 					int idA = rs.getInt("id");
 					
 					
-					/**Jeœli w bazie nie ma dru¿yny B to j¹ dodaje do bazy.*/
+					/**If team A isn't exist in the database, insert team B to the database.*/
 					sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamB() + "'";//System.out.println(sql);
 		 			rs = stmt.executeQuery(sql);
 					t = rs.next();
@@ -102,7 +98,7 @@ public class addToDatabase {
 					int idB = rs.getInt("id");
 					
 					
-					/**Jeœli danego meczu nie ma jeszcze w bazie to go dodaje do bazy*/
+					/**If given match isn't exist in the database, insert match to the database*/
 					sql = "SELECT * FROM public.\"FOOTBALL_MATCHES\" WHERE \"TeamA_ID\" = '" + idA + "' AND "
 							+ "\"TeamB_ID\" = '" + idB +"' AND \"MatchDate\" = '" + match.returnDate()+"' AND \"Page\" = '" + web + "'";
 					rs = stmt.executeQuery(sql);
@@ -124,7 +120,7 @@ public class addToDatabase {
 						//logs.logAdd("Add match " + match.returnMatchAsString() + " to database");
 
 					}
-					/**W przeciwnym wypadku wyœwietlam komunikat, ¿e taki mecz ju¿ istnieje.*/
+					/**Else print message this match already exist.*/
 					else if (t){
 						updateMatches = updateMatches + 1;
 						//logs.logWarrning(  web + " This competition is already in database: "+ match.returnMatchAsString());
@@ -156,7 +152,7 @@ public class addToDatabase {
 				stmt = connection.createStatement();
 				
 				
-				/**Jeœli w bazie nie ma dru¿yny A to j¹ dodaje do bazy.*/
+				/**If team A isn't exist in the database, insert team A to the database*/
 				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamA() + "'";//System.out.println(sql);
 				rs = stmt.executeQuery(sql);
 				t = rs.next();
@@ -168,7 +164,7 @@ public class addToDatabase {
 				int idA = rs.getInt("id");
 				
 				
-				/**Jeœli w bazie nie ma dru¿yny B to j¹ dodaje do bazy.*/
+				/**If given match isn't exist in the database, insert match to the database*/
 				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamB() + "'";//System.out.println(sql);
 	 			rs = stmt.executeQuery(sql);
 				t = rs.next();
@@ -180,7 +176,7 @@ public class addToDatabase {
 				int idB = rs.getInt("id");
 				
 				
-				/**Jeœli danego meczu nie ma jeszcze w bazie to go dodaje do bazy*/
+				/**If given match isn't exist in the database, insert match to the database*/
 				sql = "SELECT * FROM public.\"MATCHES_RESULTS\" WHERE \"TeamA_ID\" = '" + idA + "' AND "
 						+ "\"TeamB_ID\" = '" + idB +"' AND \"MatchDate\" = '" + match.returnDate()+"'";
 				rs = stmt.executeQuery(sql);
@@ -199,7 +195,7 @@ public class addToDatabase {
 					//logs.logAdd("Add match " + match.returnMatchAsString() + " to database");
 
 				}
-				/**W przeciwnym wypadku wyœwietlam komunikat, ¿e taki mecz ju¿ istnieje.*/
+				/**Else print message this match already exist.*/
 				else if (t){
 					updateMatches = updateMatches + 1;
 					//logs.logWarrning(  web + " This competition is already in database: "+ match.returnMatchAsString());
@@ -223,7 +219,7 @@ public class addToDatabase {
 				try {
 					stmt = connection.createStatement();
 					
-					/**Sprawdzam, czy ta dru¿yna istnieje ju¿ w bazie danych. Jeœli nie to j¹ dodaje do bazy*/
+					/**Check if given Team Name exist in the database. If not, insert Team name to the database.*/
 					sql = "SELECT id, \"TeamID\", \"Name\"FROM public.\"TEAM_NAMES\" WHERE \"Name\" like '" + name +"';";
 					rs = stmt.executeQuery(sql);
 					t = rs.next();
@@ -238,7 +234,7 @@ public class addToDatabase {
 						System.out.println("Add team " + name + " to database");
 
 					}
-					/**W przeciwnym wypadku wyœwietlam komunikat, ¿e taka dru¿yna ju¿ istnieje w bazie danych.*/
+					/**Else print message this team name already exist.*/
 					else if (t){
 						logs.logWarrning("This team is already in database: " + name);
 					}
@@ -257,7 +253,7 @@ public class addToDatabase {
 					try {
 						stmt = connection.createStatement();
 						
-						/**Sprawdzam, czy ta dru¿yna istnieje ju¿ w bazie danych. Jeœli nie to j¹ dodaje do bazy*/
+						/**Check if given Team Name exist in the database. If not, insert Team name to the database.*/
 						sql = "SELECT id, \"TeamID\", \"Name\"FROM public.\"TEAM_NAMES\" WHERE \"Name\" like '" + name +"';";
 						rs = stmt.executeQuery(sql);
 						t = rs.next();
@@ -272,7 +268,7 @@ public class addToDatabase {
 							logs.logAdd("Add unknown team " + name + " to database");
 
 						}
-						/**W przeciwnym wypadku wyœwietlam komunikat, ¿e taka dru¿yna ju¿ istnieje w bazie danych.*/
+						/**Else print message this team name already exist.*/
 						else if (t){
 							logs.logWarrning("This team is already in database: " + name);
 						}
