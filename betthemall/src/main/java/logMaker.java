@@ -27,7 +27,7 @@ public class logMaker {
 		    
     		if (file==null){
     			file = new File(newNameOfFile);
-    			System.out.println("File null");
+    			//System.out.println("File null");
     		}
     		else{
     			long fileSizeInMB = file.length() / 1024 / 1024;
@@ -38,9 +38,9 @@ public class logMaker {
     		
     		//if file doesnt exists, then create it
     		if(!file.exists()){
-    			System.out.println("File not exist");
+    			//System.out.println("File not exist");
     			file.createNewFile();
-    			System.out.println("File created");
+    			//System.out.println("File created");
     		}
     		
     		//true = append file
