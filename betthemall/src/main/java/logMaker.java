@@ -16,6 +16,7 @@ import com.jcraft.jsch.Session;
 
 public class logMaker {
 	
+	
 	File file = null;
 	
 	String SFTPHOST = "91.189.37.233";
