@@ -16,7 +16,7 @@ import com.jcraft.jsch.Session;
 
 public class logMaker {
 	
-	static File file = new File("logs/tescik.txt");
+	static File file = null;
 	
 	static String SFTPHOST = "91.189.37.233";
 	static int SFTPPORT = 22;
@@ -40,18 +40,18 @@ public class logMaker {
 		    //get current date time with Calendar()
 		    Calendar cal = Calendar.getInstance();
 		    
-    		/*if (file==null){
-    			String newNameOfFile = "/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.txt";
+    		if (file==null){
+    			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
     			file = new File(newNameOfFile);
     			//System.out.println("File null");
     		}
     		else{
     			long fileSizeInMB = file.length() / 1024 / 1024;
     			if (fileSizeInMB >= 10){
-    				String newNameOfFile = "/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.txt";
+    				String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
     				file = new File(newNameOfFile);
     			}
-    		}*/
+    		}
     		
     		if(!file.exists()){
     			file.createNewFile();
