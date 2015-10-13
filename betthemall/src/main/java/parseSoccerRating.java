@@ -38,7 +38,7 @@ public class parseSoccerRating{
 		this.webName = "Soccer-Rating.com";
 	}
 	
-	public void init() throws IOException{
+	public void init(){
 		db.initConnection();
 		for (int i = 0; i < urls.length; i++) {
 			findLinksToTeams(urls[i], leagueShort[i]);
@@ -47,8 +47,15 @@ public class parseSoccerRating{
 	}
 	
 	
-	public void findLinksToTeams(String url, String leagueShort) throws IOException {
-		Document doc = Jsoup.connect(url).get();
+	public void findLinksToTeams(String url, String leagueShort){
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logMaker.logError(e.getMessage());
+			//e.printStackTrace();
+		}
 		Elements table = doc.getElementsByClass("bigtable");
 		Elements links = table.first().select("a[href]");
 		/*for (int k = 0; k < links.size(); k++) {
@@ -60,8 +67,15 @@ public class parseSoccerRating{
 		}
 	}
 	
-	public void findResultForTeam(String url, String teamName, String leagueName) throws IOException {
-		Document doc = Jsoup.connect(url).get();
+	public void findResultForTeam(String url, String teamName, String leagueName){
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logMaker.logError(e.getMessage());
+		}
 		Elements table = doc.getElementsByClass("bigtable");
 	    Elements tr = table.select("tr");
 	    Elements temp;
@@ -126,7 +140,8 @@ public class parseSoccerRating{
 					return true;
 			} catch (java.text.ParseException e) {
 				System.out.println("[WARRNING] Błąd porównania daty");
-				e.printStackTrace();
+				logMaker.logError(e.getMessage());
+				//e.printStackTrace();
 			}
 		 return false; 	 
 	 }

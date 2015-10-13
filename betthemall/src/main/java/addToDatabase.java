@@ -16,19 +16,26 @@ public class addToDatabase {
 	 private static final String USERNAME = "bdwqkpvebkleol";   
 	 private static final String PASSWORD = "QtZOLTMuD-13V1OOsw_dthxqRB"; 
 	 public Connection connection = null;
-	 private logMaker logs = new logMaker();
 	 
 	 public int updateMatches = 0;
 	 public int addMatches = 0;
-	 public Connection getConnection() throws SQLException {   
+	 public Connection getConnection(){   
 		 try {   
 			 Class.forName(DRIVER);   
 		 } 
 		 catch (ClassNotFoundException ex) {   
-			 logs.logError("You give me wrong path to postgresql!");   
+			 logMaker.logError("You give me wrong path to postgresql!");   
 			 return null;   
 	    }   
-	    Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);   
+	    Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			logMaker.logError("Cannot connect with Database");   
+			logMaker.logError(e.getMessage()); 
+			//e.printStackTrace();
+		}   
 	    return conn;   
 	 } 
 	 
@@ -37,23 +44,27 @@ public class addToDatabase {
 	 } 
 	 	 
 	public void initConnection() {
-		try {   
-			connection = getConnection();   
-			logs.logInfo("Connection accepted");
-		}
-		catch (SQLException ex) {   
-			logs.logError("Connection rejected");   
-		}  	
+		connection = getConnection();   
+		try {
+			if (connection.isValid(1000)){
+				logMaker.logInfo("Connection accepted"); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			logMaker.logError("Cannot connect with Database"); 
+			logMaker.logError(e.getMessage()); 
+			//e.printStackTrace();
+		} 	
 	}
 	
 	 public void closeConnection() {
 		 try {
 			connection.close();
-			logs.logInfo("Count of added matches: " + addMatches);
-			logs.logInfo("Count of updated matches: " + updateMatches); 
-			logs.logInfo("Connection Closed."); 
+			logMaker.logInfo("Count of added matches: " + addMatches);
+			logMaker.logInfo("Count of updated matches: " + updateMatches); 
+			logMaker.logInfo("Connection Closed."); 
 		} catch (SQLException e) {
-			logs.logError("Problem with close connection");   
+			logMaker.logError("Problem with close connection");   
 			e.printStackTrace();
 		}
 	 }
@@ -128,13 +139,13 @@ public class addToDatabase {
 					
 				
 				} catch (SQLException e) {
-					logs.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
-					logs.logError(e.getMessage());
+					logMaker.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
+					logMaker.logError(e.getMessage());
 					//e.printStackTrace();
 				}
 	 		 }
 	 		 else 
-	 			 logs.logError("Failed connection with database.");
+	 			logMaker.logError("Failed connection with database.");
 	 	}
 
 		 /** Method which add team as line to database
@@ -204,13 +215,13 @@ public class addToDatabase {
 				
 			
 			} catch (SQLException e) {
-				logs.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
-				logs.logError(e.getMessage());
+				logMaker.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
+				logMaker.logError(e.getMessage());
 				//e.printStackTrace();
 			}
  		 }
  		 else 
- 			 logs.logError("Failed connection with database.");
+ 			logMaker.logError("Failed connection with database.");
  	}
 	 
 		public void addTeamNameToDatabase(String name) {
@@ -238,12 +249,12 @@ public class addToDatabase {
 					}
 					/**Else print message this team name already exist.*/
 					else if (t){
-						logs.logWarrning("This team is already in database: " + name);
+						logMaker.logWarrning("This team is already in database: " + name);
 					}
 				} 
 				catch (SQLException e) {
-					logs.logError("SQL expression is wrong. <<class.addTeamToDatabse>>");
-					logs.logError(e.getMessage());
+					logMaker.logError("SQL expression is wrong. <<class.addTeamToDatabse>>");
+					logMaker.logError(e.getMessage());
 					//e.printStackTrace();
 				}
 		}
@@ -268,17 +279,17 @@ public class addToDatabase {
 							sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"TeamID\", \"Name\")"
 									+ "VALUES (" + id + ", null, '" + name + "');";
 							stmt.executeUpdate(sql);
-							logs.logAdd("Add unknown team " + name + " to database");
+							logMaker.logAdd("Add unknown team " + name + " to database");
 
 						}
 						/**Else print message this team name already exist.*/
 						else if (t){
-							logs.logWarrning("This team is already in database: " + name);
+							logMaker.logWarrning("This team is already in database: " + name);
 						}
 					} 
 					catch (SQLException e) {
-						logs.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
-						logs.logError(e.getMessage());
+						logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
+						logMaker.logError(e.getMessage());
 						//e.printStackTrace();
 					}
 		}

@@ -16,19 +16,19 @@ import com.jcraft.jsch.Session;
 
 public class logMaker {
 	
-	File file = new File("logs/tescik.txt");
+	static File file = new File("logs/tescik.txt");
 	
-	String SFTPHOST = "91.189.37.233";
-	int SFTPPORT = 22;
-	String SFTPUSER = "root";
-	String SFTPPASS = "Wakacje123";
-	String SFTPWORKINGDIR = "/root/betthemall/logs";
+	static String SFTPHOST = "91.189.37.233";
+	static int SFTPPORT = 22;
+	static String SFTPUSER = "root";
+	static String SFTPPASS = "Wakacje123";
+	static String SFTPWORKINGDIR = "/root/betthemall/logs";
 
-	Session session = null;
-	Channel channel = null;
-	ChannelSftp channelSftp = null;
+	static Session session = null;
+	static Channel channel = null;
+	static ChannelSftp channelSftp = null;
 
-    private void logAdder(String msg)
+    private static void logAdder(String msg)
     {	
     	try{
     		
@@ -86,27 +86,27 @@ public class logMaker {
 		}
     }
 
-	public void logAdd (String msg) {
+	public static void logAdd (String msg) {
 		//System.out.println("[ADD] " + msg);
 		logAdder("[ADD] " + msg);
 	}
 	
-	public void logInfo (String msg) {
+	public static void logInfo (String msg) {
 		//System.out.println("[INFO] " + msg);
 		logAdder("[INFO] " + msg);
 	}
 	
-	public void logUpdate (String msg) {
+	public static void logUpdate (String msg) {
 		//System.out.println("[UPDATE] " + msg);
 		logAdder("[UPDATE] " + msg);
 	}
 	
-	public void logWarrning (String msg) {
+	public static void logWarrning (String msg) {
 		//System.out.println("[WARNING] " + msg);
 		logAdder("[WARNING] " + msg);
 	}
 	
-	public void logError (String msg) {
+	public static void logError (String msg) {
 		//System.out.println("[ERROR] " + msg);
 		logAdder("[ERROR] " + msg);
 	}
