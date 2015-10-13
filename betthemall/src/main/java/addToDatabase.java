@@ -44,17 +44,8 @@ public class addToDatabase {
 	 } 
 	 	 
 	public void initConnection() {
-		connection = getConnection();   
-		try {
-			if (connection.isValid(1000)){
-				logMaker.logInfo("Connection accepted"); 
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			logMaker.logError("Cannot connect with Database"); 
-			logMaker.logError(e.getMessage()); 
-			//e.printStackTrace();
-		} 	
+		connection = getConnection();  
+		logMaker.logInfo("Connection accepted"); 	
 	}
 	
 	 public void closeConnection() {
