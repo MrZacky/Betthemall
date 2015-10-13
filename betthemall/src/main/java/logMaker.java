@@ -16,7 +16,6 @@ import com.jcraft.jsch.Session;
 
 public class logMaker {
 	
-	
 	File file = new File("logs/tescik.txt");
 	
 	String SFTPHOST = "91.189.37.233";
