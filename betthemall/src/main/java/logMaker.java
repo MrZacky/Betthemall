@@ -17,7 +17,7 @@ import com.jcraft.jsch.Session;
 public class logMaker {
 	
 	
-	File file = new File("test.txt");
+	File file = new File("/logs/tescik.txt");
 	
 	String SFTPHOST = "91.189.37.233";
 	int SFTPPORT = 22;
@@ -42,14 +42,14 @@ public class logMaker {
 		    Calendar cal = Calendar.getInstance();
 		    
     		/*if (file==null){
-    			String newNameOfFile = "/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.log";
+    			String newNameOfFile = "/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.txt";
     			file = new File(newNameOfFile);
     			//System.out.println("File null");
     		}
     		else{
     			long fileSizeInMB = file.length() / 1024 / 1024;
     			if (fileSizeInMB >= 10){
-    				String newNameOfFile = "/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.log";
+    				String newNameOfFile = "/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.txt";
     				file = new File(newNameOfFile);
     			}
     		}*/
