@@ -42,14 +42,14 @@ public class logMaker {
 		    Calendar cal = Calendar.getInstance();
 		    
     		if (file==null){
-    			String newNameOfFile = "tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.log";
+    			String newNameOfFile = "$HOME/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.log";
     			file = new File(newNameOfFile);
     			//System.out.println("File null");
     		}
     		else{
     			long fileSizeInMB = file.length() / 1024 / 1024;
     			if (fileSizeInMB >= 10){
-    				String newNameOfFile = "tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.log";
+    				String newNameOfFile = "$HOME/tmp/logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall.log";
     				file = new File(newNameOfFile);
     			}
     		}
