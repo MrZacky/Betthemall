@@ -47,6 +47,8 @@ public class logMaker {
     			//System.out.println("File null");
     		}
     		else if ((file!=null) && (!file.exists())){
+    			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
+    			file = new File(newNameOfFile);
     			file.createNewFile();
     		}
     		else{
