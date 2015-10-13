@@ -129,7 +129,8 @@ public class addToDatabase {
 				
 				} catch (SQLException e) {
 					logs.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
-					e.printStackTrace();
+					logs.logError(e.getMessage());
+					//e.printStackTrace();
 				}
 	 		 }
 	 		 else 
@@ -204,7 +205,8 @@ public class addToDatabase {
 			
 			} catch (SQLException e) {
 				logs.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
-				e.printStackTrace();
+				logs.logError(e.getMessage());
+				//e.printStackTrace();
 			}
  		 }
  		 else 
@@ -241,7 +243,8 @@ public class addToDatabase {
 				} 
 				catch (SQLException e) {
 					logs.logError("SQL expression is wrong. <<class.addTeamToDatabse>>");
-					e.printStackTrace();
+					logs.logError(e.getMessage());
+					//e.printStackTrace();
 				}
 		}
 		
@@ -275,7 +278,8 @@ public class addToDatabase {
 					} 
 					catch (SQLException e) {
 						logs.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
-						e.printStackTrace();
+						logs.logError(e.getMessage());
+						//e.printStackTrace();
 					}
 		}
 }
