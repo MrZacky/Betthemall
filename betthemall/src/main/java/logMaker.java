@@ -43,19 +43,20 @@ public class logMaker {
     		if (file==null){
     			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
     			file = new File(newNameOfFile);
+    			file.createNewFile();
     			//System.out.println("File null");
+    		}
+    		else if ((file!=null) && (!file.exists())){
+    			file.createNewFile();
     		}
     		else{
     			long fileSizeInMB = file.length() / 1024 / 1024;
     			if (fileSizeInMB >= 10){
     				String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
     				file = new File(newNameOfFile);
+    				file.createNewFile();
     			}
     		}
-    		
-    		if(!file.exists()){
-    			file.createNewFile();
-			}
     		
     	    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
     	    out.println(msg);
