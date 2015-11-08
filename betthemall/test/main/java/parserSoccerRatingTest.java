@@ -2,7 +2,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import org.junit.Test;
 
-import Analyser.IncommingMatchesParsers.parseSoccerRating;
+import Crawler.IncommingMatchesParsers.parseSoccerRating;
 
 
 public class parserSoccerRatingTest {

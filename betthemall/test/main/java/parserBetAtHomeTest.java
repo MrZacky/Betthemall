@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import Analyser.IncommingMatchesParsers.parseBetAtHome;
+import Crawler.IncommingMatchesParsers.parseBetAtHome;
 
 
 public class parserBetAtHomeTest {

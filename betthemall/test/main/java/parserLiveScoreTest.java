@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import Analyser.MatchesResultsParsers.parseLiveScore;
+import Crawler.MatchesResultsParsers.parseLiveScore;
 
 
 public class parserLiveScoreTest {

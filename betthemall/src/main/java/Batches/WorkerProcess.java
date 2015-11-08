@@ -4,13 +4,13 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import Analyser.IncommingMatchesParsers.parseBetAtHome;
-import Analyser.IncommingMatchesParsers.parseBetClic;
-import Analyser.IncommingMatchesParsers.parseExpekt;
-import Analyser.IncommingMatchesParsers.parseOddsRing;
-import Analyser.IncommingMatchesParsers.parseSoccerRating;
-import Analyser.IncommingMatchesParsers.parseWilliamHill;
-import Analyser.MatchesResultsParsers.parseLiveScore;
+import Crawler.IncommingMatchesParsers.parseBetAtHome;
+import Crawler.IncommingMatchesParsers.parseBetClic;
+import Crawler.IncommingMatchesParsers.parseExpekt;
+import Crawler.IncommingMatchesParsers.parseOddsRing;
+import Crawler.IncommingMatchesParsers.parseSoccerRating;
+import Crawler.IncommingMatchesParsers.parseWilliamHill;
+import Crawler.MatchesResultsParsers.parseLiveScore;
 
 public class WorkerProcess
 {

@@ -1,4 +1,4 @@
-package Analyser.IncommingMatchesParsers;
+package Crawler.IncommingMatchesParsers;
 import java.io.IOException;
 import java.util.ArrayList;
 

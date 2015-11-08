@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import Analyser.IncommingMatchesParsers.parseWilliamHill;
+import Crawler.IncommingMatchesParsers.parseWilliamHill;
 
 
 public class parserWilliamHillTest {

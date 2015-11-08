@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import Analyser.IncommingMatchesParsers.parseOddsRing;
+import Crawler.IncommingMatchesParsers.parseOddsRing;
 
 
 public class parserOddsRingTest {
