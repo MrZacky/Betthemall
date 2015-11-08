@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import Database.addToDatabase;
+import Logger.logMaker;
 import Structure.footballMatch;
 
 
@@ -39,7 +40,7 @@ public class parseLiveScore {
 	public void init() throws IOException {
 		db.initConnection();
 		for (int i = 0; i < urls.length; i++) {
-			//System.out.println("Parsing..." + urls[i]);
+			logMaker.logInfo("Parsing..." + urls[i]);
 			findMatches(urls[i], leagueShort[i]);
 		}
 		db.closeConnection();
@@ -49,11 +50,10 @@ public class parseLiveScore {
 		Document doc = Jsoup.connect(url).get();
 		//System.out.println(doc.toString());
 		//<table class="league-table mtn"> 
-	//	Elements table = doc.getElementsByClass("league-table").select("tr");
-			Elements table = doc.getElementsByAttributeValueMatching("class", "row-gray|row-tall");
+	    //Elements table = doc.getElementsByClass("league-table").select("tr");
+		Elements table = doc.getElementsByAttributeValueMatching("class", "row-gray|row-tall");
 	
 		String temp[], temp2[];
-		//System.out.println("August 16".matches("(January|February|March|April|May|June|July|August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])"));
 		System.out.println(table.size());
 		String data ="";
 		String teamA="", teamB="";
@@ -99,8 +99,8 @@ public class parseLiveScore {
 		 addMatchesToDatabase(matchesResults);
 	}
 
-
-	 public String changeDate(String data) {
+	/**Changing date in text in date in number (February -> 01) ExampleResult : 2015.02.03**/
+	public String changeDate(String data) {
 			String[] temp = data.split(" ");
 			String year = "2015";
 				 if (temp[0].equals("January"))			temp[0] = "01";
@@ -133,12 +133,13 @@ public class parseLiveScore {
 														temp[0] = "12";	
 						  								year = "2014";
 														}
-				else temp[1] = "Wrong date";
-				data = (year + "-" + temp[0] + "-" + temp[1]);
+			else temp[1] = "Wrong date";
+			data = (year + "-" + temp[0] + "-" + temp[1]);
 			
 			return data;
 	 }
 	
+	/**Adding many matches to the Database**/
 	public void addMatchesToDatabase(ArrayList<footballMatch> matches) {
 		for (int k = 0; k < matches.size(); k++) {
 			//System.out.println(matches.get(k).returnMatchResult());
@@ -146,6 +147,7 @@ public class parseLiveScore {
 		}
 	}
 	
+	/**Adding single match to the Database**/
 	public void addMatchToDatabase(footballMatch match) {
 			db.addMatchResultToDatabase(match);
 	}

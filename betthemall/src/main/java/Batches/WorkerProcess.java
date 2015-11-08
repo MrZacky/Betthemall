@@ -25,7 +25,16 @@ public class WorkerProcess
     		System.out.println("Starting a process...");
     		error = false;
     		
-    		try {
+    		/*try {
+    			new parseLiveScore().init();
+    			System.out.println("Parsing LiveScore completed successfully");
+			} catch (Exception e) {
+				System.out.println("During parsing LiveScore exception occurred");
+				e.printStackTrace();
+				error=true;
+			}*/
+    		
+    		/*try {
     			new parseBetAtHome().init();
     			System.out.println("Parsing BetAtHome completed successfully");
 			} catch (Exception e) {
@@ -47,14 +56,6 @@ public class WorkerProcess
     			System.out.println("Parsing Expekt completed successfully");
 			} catch (Exception e) {
 				System.out.println("During parsing Expekt exception occurred");
-				e.printStackTrace();
-				error=true;
-			}
-    		try {
-    			new parseLiveScore().init();
-    			System.out.println("Parsing LiveScore completed successfully");
-			} catch (Exception e) {
-				System.out.println("During parsing LiveScore exception occurred");
 				e.printStackTrace();
 				error=true;
 			}
@@ -82,7 +83,7 @@ public class WorkerProcess
 				System.out.println("During parsing WilliamHill exception occurred");
 				e.printStackTrace();
 				error=true;
-			}
+			}*/
     		
     		
     		
