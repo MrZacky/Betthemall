@@ -10,11 +10,16 @@ import java.sql.Statement;
 	 * 		adding match to database,
 	 * 		adding team to database*/
 public class addToDatabase {
-	
-	 private static final String DRIVER = "org.postgresql.Driver";   
-	 private static final String URL = "jdbc:postgresql://91.189.37.233:5432/d51p1baokcdgcm?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";   
+	 
+	 private static final String HOST = "91.189.37.233";   
+	 private static final String PORT = "5432";   
+	 private static final String DATABASE_NAME = "betthemalldb"; 
 	 private static final String USERNAME = "root";   
 	 private static final String PASSWORD = "wakacje"; 
+	 
+	 
+	 private static final String DRIVER = "org.postgresql.Driver";  
+	 private static final String URL = "jdbc:postgresql://"+HOST+":"+PORT+"/"+DATABASE_NAME;   
 	 public Connection connection = null;
 	 
 	 public int updateMatches = 0;
