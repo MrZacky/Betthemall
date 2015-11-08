@@ -12,9 +12,9 @@ import java.sql.Statement;
 public class addToDatabase {
 	
 	 private static final String DRIVER = "org.postgresql.Driver";   
-	 private static final String URL = "jdbc:postgresql://ec2-23-23-210-37.compute-1.amazonaws.com:5432/d51p1baokcdgcm?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";   
-	 private static final String USERNAME = "bdwqkpvebkleol";   
-	 private static final String PASSWORD = "QtZOLTMuD-13V1OOsw_dthxqRB"; 
+	 private static final String URL = "jdbc:postgresql://91.189.37.233:5432/d51p1baokcdgcm?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";   
+	 private static final String USERNAME = "root";   
+	 private static final String PASSWORD = "wakacje"; 
 	 public Connection connection = null;
 	 
 	 public int updateMatches = 0;

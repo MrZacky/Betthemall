@@ -6,8 +6,8 @@ import java.util.Locale;
 public class WorkerProcess
 {
 	/** Czas podawany w milisekundach 1 sekunda = 1000 **/
-	// Uruchamianie co godzinê od startu aplikacji
-	static int time = 1000*60*60; 
+	// Uruchamianie co [time] od startu aplikacji
+	static int time = 1000*60*60; // Proces uruchamiany co godzinÄ™
 
     public static void main(String[] args) throws IOException
     {
