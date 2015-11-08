@@ -5,9 +5,11 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import Analyser.IncommingMatchesParsers.parseWilliamHill;
+
 
 public class parserWilliamHillTest {
-	//Leicester   ?   Tottenham  3.30 3.40 2.15 + 222 wiêcej   
+	//Leicester ï¿½ ? ï¿½ï¿½Tottenham  3.30 3.40 2.15 + 222 wiï¿½cej   
 
 	parseWilliamHill parser= new parseWilliamHill();
 	
@@ -20,7 +22,7 @@ public class parserWilliamHillTest {
 
 	@Test 
 	public void testChangeDate() throws IOException {
-		assertEquals(parser.changeDate("23 PaŸ"), "2015-10-23");
+		assertEquals(parser.changeDate("23 Paï¿½"), "2015-10-23");
 	}
 	
 	@Test 

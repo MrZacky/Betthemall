@@ -1,3 +1,4 @@
+package Logger;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,7 +8,6 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -33,10 +33,6 @@ public class logMaker {
     	try{
     		
 		    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm_ss.S");
-		    //get current date time with Date()
-		    Date date = new Date();
-		    //System.out.println(dateFormat.format(date));
-		  
 		    //get current date time with Calendar()
 		    Calendar cal = Calendar.getInstance();
 		    
@@ -44,7 +40,6 @@ public class logMaker {
     			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
     			file = new File(newNameOfFile);
     			file.createNewFile();
-    			//System.out.println("File null");
     		}
     		else if ((file!=null) && (!file.exists())){
     			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";

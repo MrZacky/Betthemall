@@ -1,9 +1,13 @@
+package Analyser.IncommingMatchesParsers;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import Database.addToDatabase;
+import Structure.footballMatch;
 
 
 public class parseBetClic {

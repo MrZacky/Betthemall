@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import Analyser.MatchesResultsParsers.parseLiveScore;
+
 
 public class parserLiveScoreTest {
 

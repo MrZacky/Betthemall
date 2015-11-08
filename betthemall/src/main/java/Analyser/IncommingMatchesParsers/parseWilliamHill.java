@@ -1,3 +1,4 @@
+package Analyser.IncommingMatchesParsers;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,6 +7,9 @@ import java.util.Date;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import Database.addToDatabase;
+import Structure.footballMatch;
 
 
 public class parseWilliamHill {
@@ -96,7 +100,7 @@ public class parseWilliamHill {
 			else if (temp[1].equals("Lip"))			temp[1] = "07";
 			else if (temp[1].equals("Sie"))			temp[1] = "08";
 			else if (temp[1].equals("Wrz"))			temp[1] = "09";
-			else if (temp[1].equals("PaŸ"))			temp[1] = "10";
+			else if (temp[1].equals("Paï¿½"))			temp[1] = "10";
 			else if (temp[1].equals("Lis"))			temp[1] = "11";	
 			else if (temp[1].equals("Gru"))		   	{
 													temp[1] = "12";	

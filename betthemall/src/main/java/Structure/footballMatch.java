@@ -1,3 +1,4 @@
+package Structure;
 public class footballMatch {
 	
 		private String data;
@@ -13,7 +14,7 @@ public class footballMatch {
 		private double winBpercent;
 		private String league;
 		
-		public footballMatch(String data, String teamA, String teamB,  double winA, double draw,double winB, String league) {
+		public footballMatch(String data, String teamA, String teamB,  double winA, double draw, double winB, String league) {
 			this.data  = data;
 			this.teamA = teamA;
 			this.teamB = teamB;

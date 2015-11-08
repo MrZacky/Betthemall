@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import Analyser.IncommingMatchesParsers.parseOddsRing;
+
 
 public class parserOddsRingTest {
-//28/12 17:05 Southampton FC - Chelsea Londyn 4.60 2000 PLN 3.63 697 PLN 1.76 11600 PLN Wiêcej (8)...
+//28/12 17:05 Southampton FC - Chelsea Londyn 4.60 2000 PLN 3.63 697 PLN 1.76 11600 PLN Wiï¿½cej (8)...
 	parseOddsRing parser = new parseOddsRing();
 
 

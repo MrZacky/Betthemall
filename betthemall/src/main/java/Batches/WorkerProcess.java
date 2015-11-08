@@ -1,7 +1,16 @@
+package Batches;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import Analyser.IncommingMatchesParsers.parseBetAtHome;
+import Analyser.IncommingMatchesParsers.parseBetClic;
+import Analyser.IncommingMatchesParsers.parseExpekt;
+import Analyser.IncommingMatchesParsers.parseOddsRing;
+import Analyser.IncommingMatchesParsers.parseSoccerRating;
+import Analyser.IncommingMatchesParsers.parseWilliamHill;
+import Analyser.MatchesResultsParsers.parseLiveScore;
 
 public class WorkerProcess
 {

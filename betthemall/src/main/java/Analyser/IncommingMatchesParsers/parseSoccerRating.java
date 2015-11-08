@@ -1,3 +1,4 @@
+package Analyser.IncommingMatchesParsers;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,6 +7,10 @@ import java.util.Date;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import Database.addToDatabase;
+import Logger.logMaker;
+import Structure.footballMatch;
 
 
 	/**Klasa parsująca stronę http://www.soccer-rating.com

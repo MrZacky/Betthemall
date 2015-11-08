@@ -1,9 +1,12 @@
-import java.io.FileNotFoundException;
+package Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import Logger.logMaker;
+import Structure.footballMatch;
 
 	/**Class addToDatabase connecting with database.
 	 * Methods:
