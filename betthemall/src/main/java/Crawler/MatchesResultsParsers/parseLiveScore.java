@@ -1,6 +1,8 @@
 package Crawler.MatchesResultsParsers;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -54,43 +56,31 @@ public class parseLiveScore {
 		Elements table = doc.getElementsByAttributeValueMatching("class", "row-gray|row-tall");
 	
 		String temp[], temp2[];
-		System.out.println(table.size());
 		String data ="";
 		String teamA="", teamB="";
 		int scoreA = 0, scoreB = 0;
 		for (int k = 0; k < table.size(); k++) {
 			if ((table.get(k).text()).matches("(January|February|March|April|May|June|July|"
-					+ "August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])"
-					+ "(, 2014)?")) {
+					+ "August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])")) {
 				data = table.get(k).text();
 				data = changeDate(data);
-				//System.out.println((data));
 			}
 			else {
-				//System.out.println(table.get(k).text());
 				temp = (table.get(k).text().split(" - "));
-				//System.out.println(temp[0]);
-				//System.out.println(temp[1]);
-
-				//for (int i = 0; i<temp.length; i++) {
-					//for (int j = 0; j < temp2.length; j++ )
-				//	System.out.println(i + "><" + j + "> " + temp2[j] + "		" +(temp2.length-1)	 );
-					//System.out.println(temp[0]);
-					temp2 = temp[0].split(" ");
-					scoreA = Integer.parseInt(temp2[temp2.length-1]);
-					teamA = "";
-					for(int j = 1; j < temp2.length - 1; j++) {
-						teamA = teamA + " " + temp2[j];
-					}
-					//System.out.println(temp[1]);
-					temp2 = temp[1].split(" ");
-					scoreB = Integer.parseInt(temp2[0]);
-					teamB = "";
-					for(int j = 1; j < temp2.length; j++) {
-						teamB = teamB + " " +temp2[j];
-					}
-					teamA = teamA.replaceFirst(" ", "");
-					teamB = teamB.replaceFirst(" ", "");
+				temp2 = temp[0].split(" ");
+				scoreA = Integer.parseInt(temp2[temp2.length-1]);
+				teamA = "";
+				for(int j = 1; j < temp2.length - 1; j++) {
+					teamA = teamA + " " + temp2[j];
+				}
+				temp2 = temp[1].split(" ");
+				scoreB = Integer.parseInt(temp2[0]);
+				teamB = "";
+				for(int j = 1; j < temp2.length; j++) {
+					teamB = teamB + " " +temp2[j];
+				}
+				teamA = teamA.replaceFirst(" ", "");
+				teamB = teamB.replaceFirst(" ", "");
 				matchesResults.add(new footballMatch(data, teamA, teamB, scoreA, scoreB, leagueShort));
 			}
 			
@@ -102,7 +92,8 @@ public class parseLiveScore {
 	/**Changing date in text in date in number (February -> 01) ExampleResult : 2015.02.03**/
 	public String changeDate(String data) {
 			String[] temp = data.split(" ");
-			String year = "2015";
+			Date da = new Date();
+			String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
 				 if (temp[0].equals("January"))			temp[0] = "01";
 			else if (temp[0].equals("February"))		temp[0] = "02";
 			else if (temp[0].equals("March"))			temp[0] = "03";
@@ -111,27 +102,21 @@ public class parseLiveScore {
 			else if (temp[0].equals("June"))			temp[0] = "06";
 			else if (temp[0].equals("July"))			{
 														temp[0] = "07";	
-														year = "2014";
 														}
 			else if (temp[0].equals("August"))			{
 														temp[0] = "08";	
-														year = "2014";
 														}
 			else if (temp[0].equals("September"))		{
 														temp[0] = "09";	
-														year = "2014";
 														}
 			else if (temp[0].equals("October"))			{
 														temp[0] = "10";	
-														year = "2014";
 														}
 			else if (temp[0].equals("November"))		{
 														temp[0] = "11";	
-														year = "2014";
 														}	
 			else if (temp[0].equals("December"))		{
 														temp[0] = "12";	
-						  								year = "2014";
 														}
 			else temp[1] = "Wrong date";
 			data = (year + "-" + temp[0] + "-" + temp[1]);

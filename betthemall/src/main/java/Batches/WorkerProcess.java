@@ -25,14 +25,14 @@ public class WorkerProcess
     		System.out.println("Starting a process...");
     		error = false;
     		
-    		/*try {
+    		try {
     			new parseLiveScore().init();
     			System.out.println("Parsing LiveScore completed successfully");
 			} catch (Exception e) {
 				System.out.println("During parsing LiveScore exception occurred");
 				e.printStackTrace();
 				error=true;
-			}*/
+			}
     		
     		/*try {
     			new parseBetAtHome().init();
