@@ -27,9 +27,9 @@ public class WorkerProcess
     		
     		try {
     			new parseLiveScore().init();
-    			System.out.println("Parsing LiveScore completed successfully");
+    			Logger.logMaker.logInfo("Parsing LiveScore completed successfully");
 			} catch (Exception e) {
-				System.out.println("During parsing LiveScore exception occurred");
+				Logger.logMaker.logError("During parsing LiveScore exception occurred");
 				e.printStackTrace();
 				error=true;
 			}
@@ -88,10 +88,10 @@ public class WorkerProcess
     		
     		
    		 	if (!error){
-   		 		System.out.println("Process completed successfully");
+   		 		Logger.logMaker.logInfo("Parsing Process completed successfully");
    		 	}
    		 	else{
-   		 		System.out.println("Process completed, but errors occurred");
+   		 		Logger.logMaker.logInfo("Parsing Process completed, but errors occurred");
    		 	}
    		    int style = DateFormat.FULL;
    		 	Date RunDate = new Date();
