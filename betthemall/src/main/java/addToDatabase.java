@@ -17,7 +17,6 @@ public class addToDatabase {
 	 private static final String USERNAME = "root";   
 	 private static final String PASSWORD = "wakacje"; 
 	 
-	 
 	 private static final String DRIVER = "org.postgresql.Driver";  
 	 private static final String URL = "jdbc:postgresql://"+HOST+":"+PORT+"/"+DATABASE_NAME;   
 	 public Connection connection = null;
