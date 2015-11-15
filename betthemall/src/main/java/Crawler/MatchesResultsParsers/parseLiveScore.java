@@ -67,6 +67,7 @@ public class parseLiveScore {
 		int scoreA = 0, scoreB = 0;
 		for (int k = 0; k < table.size(); k++) {
 			//System.out.println();
+			
 			if ((table.get(k).text()).matches("(January|February|March|April|May|June|July|"
 					+ "August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])")) {
 				data = table.get(k).text();
