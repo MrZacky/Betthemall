@@ -26,6 +26,7 @@ public class WorkerProcess
     		error = false;
     		
     		try {
+    			Logger.logMaker.logInfo("Parsing LiveScore started");
     			new parseLiveScore().init();
     			Logger.logMaker.logInfo("Parsing LiveScore completed successfully");
 			} catch (Exception e) {
