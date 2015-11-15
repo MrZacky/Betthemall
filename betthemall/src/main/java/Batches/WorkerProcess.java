@@ -89,11 +89,12 @@ public class WorkerProcess
 			}*/
     		
     		
-    		
    		 	if (!error){
+   		 		System.out.println("Parsing Process completed successfully");
    		 		Logger.logMaker.logInfo("Parsing Process completed successfully");
    		 	}
    		 	else{
+   		 		System.out.println("Parsing Process completed, but errors occurred");
    		 		Logger.logMaker.logInfo("Parsing Process completed, but errors occurred");
    		 	}
    		    int style = DateFormat.FULL;
