@@ -59,7 +59,7 @@
             <assembleDirectory>target</assembleDirectory>
             <programs>
                 <program>
-                    <mainClass>WorkerProcess</mainClass>
+                    <mainClass>Batches/WorkerProcess</mainClass>
                     <name>worker</name>
                 </program>
             </programs>
