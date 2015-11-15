@@ -26,7 +26,10 @@ public class WorkerProcess
     		error = false;
     		
     		try {
+    			System.out.println("Parsing LiveScore started");
+    			Logger.logMaker.logInfo("Parsing LiveScore started");
     			new parseLiveScore().init();
+    			System.out.println("Parsing LiveScore completed successfully");
     			Logger.logMaker.logInfo("Parsing LiveScore completed successfully");
 			} catch (Exception e) {
 				Logger.logMaker.logError("During parsing LiveScore exception occurred");
