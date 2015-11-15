@@ -51,10 +51,16 @@ public class parseLiveScore {
 	public void findMatches(String url, String leagueShort)throws IOException {
 		Document doc = Jsoup.connect(url).get();
 		//System.out.println(doc.toString());
+		
+		/* Example framework options */
 		//<table class="league-table mtn"> 
 	    //Elements table = doc.getElementsByClass("league-table").select("tr");
-		Elements table = doc.getElementsByAttributeValueMatching("class", "row-gray|row-tall");
+		
+		//"row-gray" - {"FT",TeamA,"ScoreA - ScoreB",TeamB}
+		//"row-tall bt0" - {Month DayOfMonth}
+		Elements table = doc.getElementsByAttributeValueMatching("class", "row-gray|row-tall bt0");
 	
+		/* Example found data "FT Aston Villa 0 - 0 Manchester City" */
 		String temp[], temp2[];
 		String data ="";
 		String teamA="", teamB="";
@@ -67,26 +73,35 @@ public class parseLiveScore {
 				data = changeDate(data);
 			}
 			else {
+				//1. Split by " - ", Example Result : temp = {"FT Aston Villa 0","0 Manchester City"}
 				temp = (table.get(k).text().split(" - "));
-				for (int i=0;i<temp.length;++i){
-					System.out.println(i+". "+temp[i]);
-				}
+				/* Printing result
+				   for (int i=0;i<temp.length;++i){
+					  System.out.println(i+". "+temp[i]);
+				   }
+				}*/
+				//2. Split by " " first part of temp1, Example Result : temp2 = {"FT","Aston","Villa","0"}
 				temp2 = temp[0].split(" ");
+				//Score of Team A
 				scoreA = Integer.parseInt(temp2[temp2.length-1]);
 				teamA = "";
+				//3. TeamA Name - Sum of Strings in temp2 + " " from index = 1 to length-1
 				for(int j = 1; j < temp2.length - 1; j++) {
 					teamA = teamA + " " + temp2[j];
 				}
+				//4. Split by " " second part of temp1, Example Result : temp2 = {"0","Manchester","City"}
 				temp2 = temp[1].split(" ");
 				scoreB = Integer.parseInt(temp2[0]);
 				teamB = "";
+				//TeamA Name - Sum of Strings in temp2 + " " from index = 1 to length-1
 				for(int j = 1; j < temp2.length; j++) {
 					teamB = teamB + " " +temp2[j];
 				}
+				//5. Remove added " " add begin of Team name {teamA,teamB}
 				teamA = teamA.replaceFirst(" ", "");
 				teamB = teamB.replaceFirst(" ", "");
-				//Testing Data
-				System.out.println("("+data+";"+teamA+";"+teamB+";"+scoreA+";"+scoreB+";"+leagueShort+")");
+				//Testing gained Data
+				//System.out.println("("+data+";"+teamA+";"+teamB+";"+scoreA+";"+scoreB+";"+leagueShort+")");
 				matchesResults.add(new footballMatch(data, teamA, teamB, scoreA, scoreB, leagueShort));
 			}
 			
