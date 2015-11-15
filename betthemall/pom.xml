@@ -56,10 +56,10 @@
           <artifactId>appassembler-maven-plugin</artifactId>
           <version>1.1.1</version>
           <configuration>
-            <assembleDirectory>target</assembleDirectory>
+            <assembleDirectory>target/Batches</assembleDirectory>
             <programs>
                 <program>
-                    <mainClass>Batches/WorkerProcess</mainClass>
+                    <mainClass>WorkerProcess</mainClass>
                     <name>worker</name>
                 </program>
             </programs>
