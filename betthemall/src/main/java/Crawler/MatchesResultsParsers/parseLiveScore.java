@@ -68,6 +68,9 @@ public class parseLiveScore {
 			}
 			else {
 				temp = (table.get(k).text().split(" - "));
+				for (int i=0;i<temp.length;++i){
+					System.out.println(i+". "+temp[i]);
+				}
 				temp2 = temp[0].split(" ");
 				scoreA = Integer.parseInt(temp2[temp2.length-1]);
 				teamA = "";
@@ -82,6 +85,7 @@ public class parseLiveScore {
 				}
 				teamA = teamA.replaceFirst(" ", "");
 				teamB = teamB.replaceFirst(" ", "");
+				//Testing Data
 				System.out.println("("+data+";"+teamA+";"+teamB+";"+scoreA+";"+scoreB+";"+leagueShort+")");
 				matchesResults.add(new footballMatch(data, teamA, teamB, scoreA, scoreB, leagueShort));
 			}
