@@ -45,6 +45,9 @@ public class parseLiveScore {
 	}
 
 	public void findMatches(String url, String leagueShort) throws IOException {
+		/* Don't add matches to database with any error */
+		Boolean error = false;
+		
 		Document doc = Jsoup.connect(url).get();
 		// System.out.println(doc.toString());
 
@@ -83,14 +86,21 @@ public class parseLiveScore {
 				try {
 					scoreA = Integer.parseInt(temp2[temp2.length - 1]);
 				} catch (NumberFormatException ex) {
-					System.out.println("Error scoreA");
+					/* Przypadek np. "?" zamiast liczby*/
+					
+					error = true;
+					
+					//System.out.println(ex.getMessage());
+					//Logger.logMaker.logError(ex.getMessage());
+
+					/*System.out.println("Error scoreA");
 					System.out.println("--------------------");
 					System.out.println(ex.getMessage());
 					System.out.println("--------------------");
 					for (int i = 0; i < temp.length; ++i) {
 						System.out.println(i + ". " + temp[i]);
 					}
-					System.out.println("--------------------");
+					System.out.println("--------------------");*/
 				}
 
 				teamA = "";
@@ -105,14 +115,20 @@ public class parseLiveScore {
 				try {
 					scoreB = Integer.parseInt(temp2[0]);
 				} catch (NumberFormatException ex) {
-					System.out.println("Error scoreB");
+					/* Przypadek np. "?" zamiast liczby*/
+					
+					error = true;
+					//System.out.println(ex.getMessage());
+					//Logger.logMaker.logError(ex.getMessage());
+					
+					/*System.out.println("Error scoreB");
 					System.out.println("--------------------");
 					System.out.println(ex.getMessage());
 					System.out.println("--------------------");
 					for (int i = 0; i < temp.length; ++i) {
 						System.out.println(i + ". " + temp[i]);
 					}
-					System.out.println("--------------------");
+					System.out.println("--------------------");*/
 				}
 				teamB = "";
 				// TeamA Name - Sum of Strings in temp2 + " " from index = 1 to
@@ -125,7 +141,11 @@ public class parseLiveScore {
 				teamB = teamB.replaceFirst(" ", "");
 				// Testing gained Data
 				// System.out.println("("+data+";"+teamA+";"+teamB+";"+scoreA+";"+scoreB+";"+leagueShort+")");
-				matchesResults.add(new footballMatch(data, teamA, teamB, scoreA, scoreB, leagueShort));
+				
+				/* Don't add matches to database with any error */
+				if (error == false){
+					matchesResults.add(new footballMatch(data, teamA, teamB, scoreA, scoreB, leagueShort));
+				}	
 			}
 
 		}
