@@ -89,6 +89,7 @@ public class WorkerProcess
 			}*/
     		
     		
+    		
    		 	if (!error){
    		 		System.out.println("Parsing Process completed successfully");
    		 		Logger.logMaker.logInfo("Parsing Process completed successfully");
