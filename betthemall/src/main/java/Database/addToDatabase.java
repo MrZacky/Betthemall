@@ -53,6 +53,7 @@ public class addToDatabase {
 	 	 
 	public void initConnection() {
 		connection = getConnection();  
+		System.out.println("Connection accepted"); 
 		logMaker.logInfo("Connection accepted"); 	
 	}
 	
@@ -61,6 +62,7 @@ public class addToDatabase {
 			connection.close();
 			logMaker.logInfo("Count of added matches: " + addMatches);
 			logMaker.logInfo("Count of updated matches: " + updateMatches); 
+			System.out.println("Connection Closed."); 
 			logMaker.logInfo("Connection Closed."); 
 		} catch (SQLException e) {
 			logMaker.logError("Problem with close connection");   

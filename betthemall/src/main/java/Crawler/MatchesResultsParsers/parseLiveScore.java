@@ -34,10 +34,12 @@ public class parseLiveScore {
 
 	public void init() throws IOException {
 		db.initConnection();
+		System.out.print("Starting parsing urls...");
 		for (int i = 0; i < urls.length; i++) {
 			logMaker.logInfo("Parsing..." + urls[i]);
 			findMatches(urls[i], leagueShort[i]);
 		}
+		System.out.print("all urls parsed.");
 		db.closeConnection();
 	}
 
