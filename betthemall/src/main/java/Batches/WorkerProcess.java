@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import Analaser.Analyser;
 import Crawler.IncommingMatchesParsers.parseBetAtHome;
 import Crawler.IncommingMatchesParsers.parseBetClic;
 import Crawler.IncommingMatchesParsers.parseExpekt;
@@ -17,7 +18,13 @@ public class WorkerProcess
 	/** Czas podawany w milisekundach 1 sekunda = 1000 **/
 	// Uruchamianie co [time] od startu aplikacji
 	static int time = 1000*60*60; // Proces uruchamiany co godzinę
+	private static Boolean newData = false;
 
+	
+	public static void sendSignalNewDataSent(){
+		newData = true;
+	}
+	
     public static void main(String[] args) throws IOException
     {
     	Boolean error;
@@ -70,7 +77,7 @@ public class WorkerProcess
 				System.out.println("During parsing OddsRing exception occurred");
 				e.printStackTrace();
 				error=true;
-			}
+			}*/
     		try {
     			new parseSoccerRating().init();	
     			System.out.println("Parsing SoccerRating completed successfully");
@@ -80,7 +87,7 @@ public class WorkerProcess
 				error=true;
 				
 			}
-    		try {
+    		/*try {
     			new parseWilliamHill().init();
     			System.out.println("Parsing WilliamHill completed successfully");
 			} catch (Exception e) {
@@ -104,7 +111,14 @@ public class WorkerProcess
    		    DateFormat df = DateFormat.getDateInstance(style, new Locale("pl", "PL"));
    		 	RunDate.setTime(RunDate.getTime()+time);
    		    df.format(RunDate);
+  
+   		    if (newData){
+    			new Analyser().init();
+    			newData = false;
+   		    }
+   		    
    		 	System.out.println("Next RunDate : "+RunDate);
+   		 	
     		try {
     			Thread.sleep(time);
 			} catch (Exception e) {

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import Database.addToDatabase;
@@ -46,8 +47,11 @@ public class parseSoccerRating{
 	public void init(){
 		db.initConnection();
 		for (int i = 0; i < urls.length; i++) {
+			System.out.println("Parsing..." + urls[i]);
+			logMaker.logInfo("Parsing..." + urls[i]);
 			findLinksToTeams(urls[i], leagueShort[i]);
 		}
+		System.out.println("all urls parsed.");
 		db.closeConnection();
 	}
 	
@@ -81,18 +85,29 @@ public class parseSoccerRating{
 			e.printStackTrace();
 			logMaker.logError(e.getMessage());
 		}
-		Elements table = doc.getElementsByClass("bigtable");
+		/*There are 3 bigtables classes, the third has got new matches*/
+		Element table = doc.getElementsByClass("bigtable").get(3);
+		//Element table1 = table.get(3);
+		//System.out.println(table1);
 	    Elements tr = table.select("tr");
 	    Elements temp;
 	    
-	    int k = 0;
-	    while (!tr.get(k).text().startsWith("30")) { //pierwszt mecz na strone ma jakby indeks 30
+	  //  int k = 0;
+	    /*while (!tr.get(k).text().startsWith("30")) { //pierwszt mecz na strone ma jakby indeks 30
 	       k = k + 1; 
-	    }
+	    }*/
 	    matches = new ArrayList<footballMatch>();
-	    for (; k < tr.size(); k++) { //tr.size()
+	    for (int k = 1 ; k < tr.size(); k++) { //tr.size()
 	    	temp = tr.get(k).select("td");
+	    	//System.out.println(temp);
+	    	//System.out.println("-------------");
 	    	if (leagueName.equals(temp.get(6).text())){
+	    		
+	    		/*System.out.println("------------------------------");
+	    		System.out.println(homeTeam(temp.get(2).text()));
+	    		System.out.println(awayTeam(temp.get(2).text()));
+	    		System.out.println(changeDate(temp.get(1).text()));
+	    		System.out.println("------------------------------");*/
  			matches.add(new footballMatch(	changeDate(temp.get(1).text()), 
      										homeTeam(temp.get(2).text()),
      										awayTeam(temp.get(2).text()), 

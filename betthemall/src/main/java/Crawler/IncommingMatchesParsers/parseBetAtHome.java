@@ -60,17 +60,19 @@ public class parseBetAtHome {
 		/*System.out.println((k+1) + " " + eMatch.text());
 		for (int i = 0; i < eMatch.size(); i++) {
 			System.out.println("#(" + i + ")" + eMatch.get(i).text()+ "#");
-		}
+		}*/
+		System.out.println("------------------------------");
 		System.out.println(homeTeam(eMatch.get(0).text()));
 		System.out.println(awayTeam(eMatch.get(0).text()));
-		System.out.println(changeDate(eMatch.get(1).text()));*/
-		matches.add(new footballMatch(	changeDate(eMatch.get(1).text()), 
+		System.out.println(changeDate(eMatch.get(1).text()));
+		System.out.println("------------------------------");
+		/*matches.add(new footballMatch(	changeDate(eMatch.get(1).text()), 
 										homeTeam(eMatch.get(0).text()),
 										awayTeam(eMatch.get(0).text()), 
 										changeOdd(eMatch.get(2).text()), 
 										changeOdd(eMatch.get(3).text()),
 										changeOdd(eMatch.get(4).text()),  
-										leagueName));
+										leagueName));*/
 	}
 
 	 public String homeTeam(String mecz) {

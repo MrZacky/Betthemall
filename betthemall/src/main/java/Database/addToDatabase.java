@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Batches.WorkerProcess;
 import Logger.logMaker;
 import Structure.footballMatch;
 
@@ -60,10 +61,18 @@ public class addToDatabase {
 	 public void closeConnection() {
 		 try {
 			connection.close();
+			System.out.println("Count of added matches: " + addMatches);
 			logMaker.logInfo("Count of added matches: " + addMatches);
+			System.out.println("Count of updated matches: " + updateMatches); 
 			logMaker.logInfo("Count of updated matches: " + updateMatches); 
 			System.out.println("Connection Closed."); 
 			logMaker.logInfo("Connection Closed."); 
+			
+			//If Any Matches added or updated, change newData in Worker Process to true
+			if ((addMatches>0) || (updateMatches>0)){
+				WorkerProcess.sendSignalNewDataSent();
+			}
+			
 		} catch (SQLException e) {
 			logMaker.logError("Problem with close connection");   
 			e.printStackTrace();

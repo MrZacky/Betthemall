@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -64,11 +66,16 @@ public class parseLiveScore {
 		String data = "";
 		String teamA = "", teamB = "";
 		int scoreA = 0, scoreB = 0;
+		
+		Pattern date = Pattern.compile("(January|February|March|April|May|June|July|"
+				+ "August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])");
+		
 		for (int k = 0; k < table.size(); k++) {
 			// System.out.println();
+			
+			Matcher m = date.matcher(table.get(k).text());
 
-			if ((table.get(k).text()).matches("(January|February|March|April|May|June|July|"
-					+ "August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])")) {
+			if (m.matches()) {
 				data = table.get(k).text();
 				data = changeDate(data);
 			} else {
@@ -154,7 +161,7 @@ public class parseLiveScore {
 
 	/**
 	 * Changing date in text in date in number (February -> 01) ExampleResult :
-	 * 2015.02.03
+	 * 2015-02-03
 	 **/
 	public String changeDate(String data) {
 		String[] temp = data.split(" ");
