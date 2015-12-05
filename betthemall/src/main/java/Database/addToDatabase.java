@@ -26,7 +26,6 @@ public class addToDatabase {
 	 private static final String URL = "jdbc:postgresql://"+HOST+":"+PORT+"/"+DATABASE_NAME;   
 	 public Connection connection = null;
 	 
-	 public int updateMatches = 0;
 	 public int addMatches = 0;
 	 public Connection getConnection(){   
 		 try {   
@@ -63,13 +62,11 @@ public class addToDatabase {
 			connection.close();
 			System.out.println("Count of added matches: " + addMatches);
 			logMaker.logInfo("Count of added matches: " + addMatches);
-			System.out.println("Count of updated matches: " + updateMatches); 
-			logMaker.logInfo("Count of updated matches: " + updateMatches); 
 			System.out.println("Connection Closed."); 
 			logMaker.logInfo("Connection Closed."); 
 			
 			//If Any Matches added or updated, change newData in Worker Process to true
-			if ((addMatches>0) || (updateMatches>0)){
+			if (addMatches>0){
 				WorkerProcess.sendSignalNewDataSent();
 			}
 			
@@ -142,10 +139,9 @@ public class addToDatabase {
 
 					}
 					/**Else print message this match already exist.*/
-					else if (t){
-						updateMatches = updateMatches + 1;
+					/*else if (t){
 						//logs.logWarrning(  web + " This competition is already in database: "+ match.returnMatchAsString());
-					}
+					}*/
 					
 				
 				} catch (SQLException e) {
@@ -218,10 +214,9 @@ public class addToDatabase {
 
 				}
 				/**Else print message this match already exist.*/
-				else if (t){
-					updateMatches = updateMatches + 1;
+				/*else if (t){
 					//logs.logWarrning(  web + " This competition is already in database: "+ match.returnMatchAsString());
-				}
+				}*/
 				
 			
 			} catch (SQLException e) {
