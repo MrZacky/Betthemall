@@ -100,7 +100,7 @@ public class addToDatabase {
 					rs = stmt.executeQuery(sql);
 					t = rs.next();
 					if(!t) {
-						addUnknownTeamNameToDatabase(match.returnTeamA());
+						addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
 						rs = stmt.executeQuery(sql);
 						rs.next();
 					}
@@ -112,7 +112,7 @@ public class addToDatabase {
 		 			rs = stmt.executeQuery(sql);
 					t = rs.next();
 		 			if(!t) {
-						addUnknownTeamNameToDatabase(match.returnTeamB());
+						addUnknownTeamNameToDatabase(match.returnTeamB(), match.returnLeague());
 						rs = stmt.executeQuery(sql);
 						rs.next();
 					}
@@ -179,7 +179,7 @@ public class addToDatabase {
 				rs = stmt.executeQuery(sql);
 				t = rs.next();
 				if(!t) {
-					addUnknownTeamNameToDatabase(match.returnTeamA());
+					addUnknownTeamNameToDatabase(match.returnTeamA(),match.returnLeague());
 					rs = stmt.executeQuery(sql);
 					rs.next();
 				}
@@ -191,7 +191,7 @@ public class addToDatabase {
 	 			rs = stmt.executeQuery(sql);
 				t = rs.next();
 	 			if(!t) {
-					addUnknownTeamNameToDatabase(match.returnTeamB());
+					addUnknownTeamNameToDatabase(match.returnTeamB(),match.returnLeague());
 					rs = stmt.executeQuery(sql);
 					rs.next();
 				}
@@ -269,7 +269,7 @@ public class addToDatabase {
 				}
 		}
 		
-		public void addUnknownTeamNameToDatabase(String name) {
+		public void addUnknownTeamNameToDatabase(String name, String league) {
 					ResultSet rs = null;
 				    Statement stmt = null;
 				    String sql = null;
@@ -278,7 +278,7 @@ public class addToDatabase {
 						stmt = connection.createStatement();
 						
 						/**Check if given Team Name exist in the database. If not, insert Team name to the database.*/
-						sql = "SELECT id, \"TeamID\", \"Name\"FROM public.\"TEAM_NAMES\" WHERE \"Name\" like '" + name +"';";
+						sql = "SELECT id, \"Name\" FROM public.\"TEAM_NAMES\" WHERE \"Name\" like '" + name +"';";
 						rs = stmt.executeQuery(sql);
 						t = rs.next();
 						if (!t) {
@@ -286,8 +286,8 @@ public class addToDatabase {
 							rs = stmt.executeQuery(sql);
 							rs.next();
 							int id = Integer.parseInt(rs.getString(rs.getRow()));
-							sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"TeamID\", \"Name\")"
-									+ "VALUES (" + id + ", null, '" + name + "');";
+							sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, league, \"Name\")"
+									+ "VALUES (" + id + ", '" + name + "');";
 							stmt.executeUpdate(sql);
 							logMaker.logAdd("Add unknown team " + name + " to database");
 
