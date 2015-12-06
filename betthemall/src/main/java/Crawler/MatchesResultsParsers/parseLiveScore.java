@@ -26,6 +26,7 @@ public class parseLiveScore {
 
 	private static String[] leagueShort = { "UK1", "ES1", "DE1", "IT1", "FR1", "PL1" };
 
+	
 	public String webName;
 	ArrayList<footballMatch> matchesResults = new ArrayList<footballMatch>();
 	addToDatabase db = new addToDatabase();
