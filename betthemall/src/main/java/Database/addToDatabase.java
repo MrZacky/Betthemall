@@ -51,11 +51,11 @@ public class addToDatabase {
 		
 	 } 
 	 	 
-	public void initConnection() {
+	 public void initConnection() {
 		connection = getConnection();  
 		System.out.println("Connection accepted"); 
 		logMaker.logInfo("Connection accepted"); 	
-	}
+	 }
 	
 	 public void closeConnection() {
 		 try {
@@ -228,43 +228,9 @@ public class addToDatabase {
  		 else 
  			logMaker.logError("Failed connection with database.");
  	}
-	 
-		public void addTeamNameToDatabase(String name) {
-				ResultSet rs = null;
-			    Statement stmt = null;
-			    String sql = null;
-			    boolean t;
-				try {
-					stmt = connection.createStatement();
-					
-					/**Check if given Team Name exist in the database. If not, insert Team name to the database.*/
-					sql = "SELECT id, \"TeamID\", \"Name\"FROM public.\"TEAM_NAMES\" WHERE \"Name\" like '" + name +"';";
-					rs = stmt.executeQuery(sql);
-					t = rs.next();
-					if (!t) {
-						sql = "SELECT nextval('public.\"TEAM_NAMES_SEQ\"')";
-						rs = stmt.executeQuery(sql);
-						rs.next();
-						int id = Integer.parseInt(rs.getString(rs.getRow()));
-						sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"TeamID\", \"Name\")"
-								+ "VALUES (" + id + ", '" + id + "', '" + name + "');";
-						stmt.executeUpdate(sql);
-						System.out.println("Add team " + name + " to database");
 
-					}
-					/**Else print message this team name already exist.*/
-					else if (t){
-						logMaker.logWarrning("This team is already in database: " + name);
-					}
-				} 
-				catch (SQLException e) {
-					logMaker.logError("SQL expression is wrong. <<class.addTeamToDatabse>>");
-					logMaker.logError(e.getMessage());
-					//e.printStackTrace();
-				}
-		}
 		
-		public void addUnknownTeamNameToDatabase(String name, String league) {
+	 public void addUnknownTeamNameToDatabase(String name, String league) {
 					ResultSet rs = null;
 				    Statement stmt = null;
 				    String sql = null;
@@ -281,8 +247,8 @@ public class addToDatabase {
 							rs = stmt.executeQuery(sql);
 							rs.next();
 							int id = Integer.parseInt(rs.getString(rs.getRow()));
-							sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, league, \"Name\")"
-									+ "VALUES (" + id + ", '" + name + "');";
+							sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"League\", \"Name\")"
+									+ "VALUES (" + id+ ", '" + league + "'" + ", '" + name + "');";
 							stmt.executeUpdate(sql);
 							logMaker.logAdd("Add unknown team " + name + " to database");
 
