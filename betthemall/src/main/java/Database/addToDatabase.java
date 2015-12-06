@@ -104,7 +104,7 @@ public class addToDatabase {
 					int idA = rs.getInt("id");
 					
 					
-					/**If team A isn't exist in the database, insert team B to the database.*/
+					/**If team B isn't exist in the database, insert team B to the database.*/
 					sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamB() + "'";//System.out.println(sql);
 		 			rs = stmt.executeQuery(sql);
 					t = rs.next();

@@ -20,16 +20,20 @@ public class Analyser {
 	}
 
 	private void CalculateMatchesResults() {
-	//1. Pobranie zbliżającego się meczu (drużyna X przeciw drużynie Y)
+	//1. Pobranie zbliżającego się meczu (drużyna A przeciw drużynie B)
 		footballMatch currentMatch = null;
-	//2. Wyzerowanie współczynnika skuteczności drużyny X i Y.
-		Double efficiencyX = 0.0;
-		Double efficiencyY = 0.0;
-	//3. Korekcja współczynników skuteczności względem aktualnej pozycji w tabeli.
+	//2. Wyzerowanie współczynnika skuteczności drużyny A i B.
+		Double efficiencyA = 0.0;
+		Double efficiencyB = 0.0;
+	//3. Korekcja współczynników skuteczności względem ostatnio rozegranych meczów (czy były wygrane, czy przegrane i z jaką przewagą)
 		
-	//4. Korekcja współczynników skuteczności względem ostatnio rozegranych meczów (czy były wygrane, czy przegrane i z jaką przewagą)
-	//5. Korekcja współczynników skuteczności na podstawie wiadomości czy dane drużyny lepiej grają na wyjazdach czy u siebie.
+	//4. Korekcja współczynników skuteczności na podstawie wiadomości czy dane drużyny lepiej grają na wyjazdach czy u siebie.
+	
+	//5. Korekcja współczynników na podstawie kursów bukmacherów.	
+		
 	//6. Dowolne możliwe korekcje na podstawie posiadanych danych.
+		
+	//7. Oznaczenie, że analiza dla podanego meczu została wykonana.
 
 	}
 

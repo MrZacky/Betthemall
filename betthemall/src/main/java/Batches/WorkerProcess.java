@@ -5,12 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import Analaser.Analyser;
-import Crawler.IncommingMatchesParsers.parseBetAtHome;
-import Crawler.IncommingMatchesParsers.parseBetClic;
-import Crawler.IncommingMatchesParsers.parseExpekt;
-import Crawler.IncommingMatchesParsers.parseOddsRing;
 import Crawler.IncommingMatchesParsers.parseSoccerRating;
-import Crawler.IncommingMatchesParsers.parseWilliamHill;
 import Crawler.MatchesResultsParsers.parseLiveScore;
 
 public class WorkerProcess
@@ -33,6 +28,7 @@ public class WorkerProcess
     		error = false;
     		
     		try {
+    			/* Parsing results of matches */	
     			System.out.println("Parsing LiveScore started");
     			Logger.logMaker.logInfo("Parsing LiveScore started");
     			new parseLiveScore().init();
@@ -45,40 +41,8 @@ public class WorkerProcess
 				error=true;
 			}
     		
-    		/*try {
-    			new parseBetAtHome().init();
-    			System.out.println("Parsing BetAtHome completed successfully");
-			} catch (Exception e) {
-				System.out.println("During parsing BetAtHome exception occurred");
-				e.printStackTrace();
-				error=true;
-			}
     		try {
-    			new parseBetClic().init();
-    			System.out.println("Parsing BetClic completed successfully");
-			} catch (Exception e) {
-				System.out.println("During parsing BetClic exception occurred");
-				e.printStackTrace();
-				error=true;
-			}
-    		
-    		try {
-    			new parseExpekt().init();
-    			System.out.println("Parsing Expekt completed successfully");
-			} catch (Exception e) {
-				System.out.println("During parsing Expekt exception occurred");
-				e.printStackTrace();
-				error=true;
-			}
-    		try {
-    			new parseOddsRing().init();
-    			System.out.println("Parsing OddsRing completed successfully");
-			} catch (Exception e) {
-				System.out.println("During parsing OddsRing exception occurred");
-				e.printStackTrace();
-				error=true;
-			}*/
-    		try {
+    			/* Parsing new matches */	
     			new parseSoccerRating().init();	
     			System.out.println("Parsing SoccerRating completed successfully");
 			} catch (Exception e) {
@@ -87,17 +51,7 @@ public class WorkerProcess
 				error=true;
 				
 			}
-    		/*try {
-    			new parseWilliamHill().init();
-    			System.out.println("Parsing WilliamHill completed successfully");
-			} catch (Exception e) {
-				System.out.println("During parsing WilliamHill exception occurred");
-				e.printStackTrace();
-				error=true;
-			}*/
-    		
-    		
-    		
+
    		 	if (!error){
    		 		System.out.println("Parsing Process completed successfully");
    		 		Logger.logMaker.logInfo("Parsing Process completed successfully");
