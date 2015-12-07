@@ -57,7 +57,7 @@ public class databaseTest {
 		db.closeConnection();
 	}
 	
-	@Test
+	//@Test
 	public void test2() throws IOException {
 		addToDatabase db = new addToDatabase();
 		db.initConnection();
@@ -76,6 +76,19 @@ public class databaseTest {
 		for (int i=0;i<k;i++){
 			System.out.println(incommingMatches.get(i).returnMatchAsString());
 		}
+		
+		db.closeConnection();
+	}
+	
+	
+	@Test
+	public void test3() throws IOException {
+		addToDatabase db = new addToDatabase();
+		db.initConnection();
+		
+		List<footballMatch> incommingMatches = db.getAllNewIncommingMatches();
+		
+		db.addFinalMatchResultToDatabase(incommingMatches.get(0));
 		
 		db.closeConnection();
 	}

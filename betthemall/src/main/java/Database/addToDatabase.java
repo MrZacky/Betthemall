@@ -125,7 +125,8 @@ public class addToDatabase {
 				stmt = connection.createStatement();
 				
 				sql = "SELECT  id ,\"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"WinA\",\"Draw\", \"WinB\", "
-					+ "\"League\", \"Page\" FROM public.\"FOOTBALL_MATCHES\"";
+					+ "\"League\", \"Page\" FROM public.\"FOOTBALL_MATCHES\""
+					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1";
 				rs = stmt.executeQuery(sql);
 				
 				while(rs.next()){
@@ -286,7 +287,9 @@ public class addToDatabase {
 	         try {
 				stmt = connection.createStatement();
 				
-			    sql = "SELECT nextval('public.\"FINAL_FOOTABALL_MATCHES_SEQ\"')";
+				System.out.println("New ID Selected");
+				
+			    sql = "SELECT nextval('public.\"FINAL_FOOTBALL_MATCHES_SEQ\"');";
 			    rs = stmt.executeQuery(sql);
 				rs.next();
 				int id = Integer.parseInt(rs.getString(rs.getRow()));
@@ -294,20 +297,27 @@ public class addToDatabase {
 				String TeamAName = getTeamNameByID(finalMatch.returnTeamA());
 				String TeamBName = getTeamNameByID(finalMatch.returnTeamB());
 				
+				System.out.println("Team Names Selected");
+				
 				sql = "INSERT INTO  public.\"FINAL_FOOTBALL_MATCHES\" ( id ,\"TeamA_Name\", \"TeamB_Name\", \"MatchDate\", \"WinA\", \"Draw\", \"WinB\",\"League\")"
-						+ "VALUES ("+ id +", '" + TeamAName +"', '" + TeamBName +"', '" + finalMatch.returnOddForWinA() +"', '" 
+						+ "VALUES ("+ id +", '" + TeamAName +"', '" + TeamBName +"', '" + finalMatch.returnDate() +"', '" 
 						+	finalMatch.returnOddForWinA() +"', '" +	finalMatch.returnOddForDraw() +"', '" + finalMatch.returnOddForWinB() +"', '" + finalMatch.returnLeague() + "');";
 				stmt.executeUpdate(sql);
 				addFinalMatches = addFinalMatches + 1;
 				
-				sql = "UPDATE public.\"FOOTBALL_MATCHES\"+"
+				System.out.println("FINAL_FOOTBAL_MATCH WITH ID "+id+" ADDED");
+				
+				sql = "UPDATE public.\"FOOTBALL_MATCHES\""
 						+ "SET \"FINAL_FOOTBALL_MATCH_ID\" = '"+id+"'"
-							+ "WHERE \"id\" = '"+finalMatch.returnID()+"'";
+							+ "WHERE \"id\" = '"+finalMatch.returnID()+"';";
 				stmt.executeUpdate(sql);
 			
+				System.out.println("FOOTBALL_MATCH WITH ID "+finalMatch.returnID()+" UPDATED");
+				
 			} catch (SQLException e) {
-				logMaker.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
-				logMaker.logError(e.getMessage());
+				System.out.println(e.getMessage());
+				//logMaker.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
+				//logMaker.logError(e.getMessage());
 				//e.printStackTrace();
 			}
  		 }
