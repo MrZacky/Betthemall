@@ -1,6 +1,7 @@
 package Structure;
 public class footballMatch {
 	
+		private String ID;
 		private String data;
 		private String teamA;
 		private String teamB;
@@ -15,6 +16,18 @@ public class footballMatch {
 		private String league;
 		
 		public footballMatch(String data, String teamA, String teamB,  double winA, double draw, double winB, String league) {
+			this.data  = data;
+			this.teamA = teamA;
+			this.teamB = teamB;
+			this.winA = winA;
+			this.draw = draw;
+			this.winB = winB;
+			this.league = league;
+			changeOddToPerCent();
+		}
+		
+		public footballMatch(String ID, String data, String teamA, String teamB,  double winA, double draw, double winB, String league) {
+			this.ID = ID;
 			this.data  = data;
 			this.teamA = teamA;
 			this.teamB = teamB;
@@ -84,11 +97,11 @@ public class footballMatch {
 		}
 		
 		public String returnFullMatchAsString() {
-			return (teamA + " - " + teamB + " " + data + " " + winA + " " + winApercent + " "  + draw + " " + drawpercent + " "  + winB + " " + winBpercent + " " + league);
+			return (ID + " - " + teamA + " - " + teamB + " " + data + " " + winA + " " + winApercent + " "  + draw + " " + drawpercent + " "  + winB + " " + winBpercent + " " + league);
 		}
 		
 		public String returnMatchAsString() {
-			return (teamA + " - " + teamB + " " + data + " " + winA + " " + draw + " " + winB + " " + league);
+			return (ID + " - " + teamA + " - " + teamB + " " + data + " " + winA + " " + draw + " " + winB + " " + league);
 		}
 		
 		public String returnMatchResult() {

@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import Batches.WorkerProcess;
 import Logger.logMaker;
@@ -75,6 +77,119 @@ public class addToDatabase {
 			e.printStackTrace();
 		}
 	 }
+	 
+	 public String getTeamNameByID(String TeamID){
+			ResultSet rs = null;
+		    Statement stmt = null;
+		    String sql = null;
+		    String TeamName = "";
+		    boolean t;
+			try {
+				stmt = connection.createStatement();
+					/**Select all matches results of teamA againts teamB**/
+				sql = "SELECT \"Name\" FROM public.\"TEAM_NAMES\""
+						+ "WHERE id = '"+TeamID+"'";
+				
+				rs = stmt.executeQuery(sql);
+				
+				t = rs.next();
+	 			if(t) {
+	 				TeamName = rs.getString("Name");
+				}
+	 			else{
+	 				TeamName = "Name not found";
+	 			}
+			}
+			catch (SQLException e) {
+				logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
+				logMaker.logError(e.getMessage());
+				//e.printStackTrace();
+			}
+		 return TeamName;
+	 }
+	 
+	 	public List<footballMatch> getAllNewIncommingMatches(){
+			ResultSet rs = null;
+		    Statement stmt = null;
+		    String sql = null;
+		    List<footballMatch> matchesList = new ArrayList();		 
+
+			try {				
+				stmt = connection.createStatement();
+				
+				sql = "SELECT  id ,\"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"WinA\",\"Draw\", \"WinB\", "
+					+ "\"League\", \"Page\" FROM public.\"FOOTBALL_MATCHES\"";
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()){
+				    //public footballMatch(String ID, String data, String teamA, String teamB,  double winA, double draw, double winB, String league)
+		            String MatchID = rs.getString("ID");
+					String TeamA = rs.getString("TeamA_ID");
+		            String TeamB = rs.getString("TeamB_ID");
+		            String MatchDate = rs.getString("MatchDate");
+		            double WinA = rs.getDouble("WinA");
+		            double Draw = rs.getDouble("Draw");
+		            double WinB = rs.getDouble("WinB");
+		            String League = rs.getString("League");
+		            footballMatch match = new footballMatch(MatchID,MatchDate,TeamA,TeamB,WinA,Draw,WinB,League);
+		            matchesList.add(match);
+				}
+			} 
+			catch (SQLException e) {
+				logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
+				logMaker.logError(e.getMessage());
+				//e.printStackTrace();
+			}
+			return matchesList;
+	 	}
+	 
+	 
+	 /** Get all matches results from database of teamA **/
+		public List<footballMatch> getMatchesResultsFromDatabase(String teamAID, String teamBID, boolean MatchesOnlyAgaintsTeamB){
+			ResultSet rs = null;
+		    Statement stmt = null;
+		    String sql = null;
+		    List<footballMatch> matchesList = new ArrayList();
+		    //		public footballMatch(String data, String teamA, String teamB,  double winA, double draw, double winB, String league);
+		    boolean t;
+			try {
+				stmt = connection.createStatement();
+				
+				if (MatchesOnlyAgaintsTeamB){
+					/**Select all matches results of teamA againts teamB**/
+					sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
+							+ "\"League\" FROM public.\"MATCHES_RESULTS\""
+							+ "WHERE \"TeamA_ID\" = '" + teamAID +"' and \"TeamB_ID\" = '" + teamBID +"';";
+				}
+				else{
+					/**Select all matches results of teamA also without matches with teamB**/
+					sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
+							+ "\"League\" FROM public.\"MATCHES_RESULTS\""
+							+ "WHERE \"TeamA_ID\" = '" + teamAID +"' and \"TeamB_ID\" != '" + teamBID +"';";
+				}
+				
+				rs = stmt.executeQuery(sql);
+				while(rs.next()){
+				    //			public footballMatch(String data, String teamA, String teamB,  int scoreA, int scoreB, String league) {
+		            String TeamA = rs.getString("TeamA_ID");
+		            String TeamB = rs.getString("TeamB_ID");
+		            String MatchDate = rs.getString("MatchDate");
+		            int TeamAScore = rs.getInt("TeamA_Score");
+		            int TeamBScore = rs.getInt("TeamB_Score");
+		            String League = rs.getString("League");
+		            footballMatch match = new footballMatch(MatchDate,TeamA,TeamB,TeamAScore,TeamBScore,League);
+		            matchesList.add(match);
+				}
+			} 
+			catch (SQLException e) {
+				logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
+				logMaker.logError(e.getMessage());
+				//e.printStackTrace();
+			}
+			
+		 return matchesList;
+	}
+	 
 	 
 	 /** Method which add match as line to database
 	  * 	id
