@@ -29,6 +29,7 @@ public class addToDatabase {
 	 public Connection connection = null;
 	 
 	 public int addMatches = 0;
+	 public int addFinalMatches = 0;
 	 public Connection getConnection(){   
 		 try {   
 			 Class.forName(DRIVER);   
@@ -62,8 +63,14 @@ public class addToDatabase {
 	 public void closeConnection() {
 		 try {
 			connection.close();
+			System.out.println("Crawler :");
+			logMaker.logInfo("Crawler :");
 			System.out.println("Count of added matches: " + addMatches);
 			logMaker.logInfo("Count of added matches: " + addMatches);
+			System.out.println("Analyser :");
+			logMaker.logInfo("Analyser :");
+			System.out.println("Count of added final matches results: " + addFinalMatches);
+			logMaker.logInfo("Count of added final matches results: " + addFinalMatches);
 			System.out.println("Connection Closed."); 
 			logMaker.logInfo("Connection Closed."); 
 			
@@ -269,11 +276,50 @@ public class addToDatabase {
 	 			logMaker.logError("Failed connection with database.");
 	 	}
 
-		 /** Method which add team as line to database
-		  * 	id,
-		  *  	TeamID,
-		  *  	name
-		  *  */
+	 
+	 public void addFinalMatchResultToDatabase(footballMatch finalMatch) {
+ 		 if (connection != null) {   
+ 			    ResultSet rs = null;
+ 			    Statement stmt = null;
+ 			    String sql = null;
+ 			    boolean t;
+	         try {
+				stmt = connection.createStatement();
+				
+			    sql = "SELECT nextval('public.\"FINAL_FOOTABALL_MATCHES_SEQ\"')";
+			    rs = stmt.executeQuery(sql);
+				rs.next();
+				int id = Integer.parseInt(rs.getString(rs.getRow()));
+				
+				String TeamAName = getTeamNameByID(finalMatch.returnTeamA());
+				String TeamBName = getTeamNameByID(finalMatch.returnTeamB());
+				
+				sql = "INSERT INTO  public.\"FINAL_FOOTBALL_MATCHES\" ( id ,\"TeamA_Name\", \"TeamB_Name\", \"MatchDate\", \"WinA\", \"Draw\", \"WinB\",\"League\")"
+						+ "VALUES ("+ id +", '" + TeamAName +"', '" + TeamBName +"', '" + finalMatch.returnOddForWinA() +"', '" 
+						+	finalMatch.returnOddForWinA() +"', '" +	finalMatch.returnOddForDraw() +"', '" + finalMatch.returnOddForWinB() +"', '" + finalMatch.returnLeague() + "');";
+				stmt.executeUpdate(sql);
+				addFinalMatches = addFinalMatches + 1;
+				
+				sql = "UPDATE public.\"FOOTBALL_MATCHES\"+"
+						+ "SET \"FINAL_FOOTBALL_MATCH_ID\" = '"+id+"'"
+							+ "WHERE \"id\" = '"+finalMatch.returnID()+"'";
+				stmt.executeUpdate(sql);
+			
+			} catch (SQLException e) {
+				logMaker.logError("SQL expression is wrong. <<class.addMatchToDatabse>>");
+				logMaker.logError(e.getMessage());
+				//e.printStackTrace();
+			}
+ 		 }
+ 		 else 
+ 			logMaker.logError("Failed connection with database.");
+ 	}	 
+	 
+	 /** Method which add team as line to database
+	  * 	id,
+	  *  	TeamID,
+	  *  	name
+	  *  */
 	 
 	 public void addMatchResultToDatabase(footballMatch match) {
  		 if (connection != null) {   

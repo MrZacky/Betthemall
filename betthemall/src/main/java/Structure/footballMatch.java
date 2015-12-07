@@ -57,7 +57,9 @@ public class footballMatch {
 			winBpercent = 100*winBpercent/sum;
 			drawpercent = 100*drawpercent/sum;
 		}
-		
+		public String returnID(){
+			return ID;
+		}
 		public String returnTeamA(){
 			return teamA;
 		}

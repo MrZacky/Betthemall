@@ -22,7 +22,7 @@ public class Analyser {
 	
 	private void CalculateMatchesResults() {
 		// Pobranie wszystkich nie policzonych meczy
-		List<footballMatch> matches = null;
+		List<footballMatch> matches = db.getAllNewIncommingMatches();
 		for (int i=0;i<matches.size();i++){
 			CalculateMatchResults(matches.get(i));	
 		}

@@ -64,9 +64,16 @@ public class databaseTest {
 		
 		List<footballMatch> incommingMatches = db.getAllNewIncommingMatches();
 		
-		System.out.println(incommingMatches.size());
+		System.out.println("incommingMatches List Size : "+incommingMatches.size());
 		
-		for (int i=0;(i<incommingMatches.size()) || (i<5);i++){
+		// How Many Iteration If Possible, If not k = incommingMatches.size()
+		int k = 5;
+		
+		if (incommingMatches.size()<k){
+			k = incommingMatches.size();
+		}
+		
+		for (int i=0;i<k;i++){
 			System.out.println(incommingMatches.get(i).returnMatchAsString());
 		}
 		
