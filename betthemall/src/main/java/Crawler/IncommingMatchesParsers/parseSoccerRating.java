@@ -108,7 +108,7 @@ public class parseSoccerRating{
 	    		System.out.println(awayTeam(temp.get(2).text()));
 	    		System.out.println(changeDate(temp.get(1).text()));
 	    		System.out.println("------------------------------");*/
- 			matches.add(new footballMatch(	changeDate(temp.get(1).text()), 
+ 			matches.add(new footballMatch(changeDate(temp.get(1).text()), 
      										homeTeam(temp.get(2).text()),
      										awayTeam(temp.get(2).text()), 
      										changeOdd(temp.get(3).text()), 

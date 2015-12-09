@@ -12,6 +12,25 @@ import Logger.logMaker;
 import Structure.footballMatch;
 
 public class databaseTest {
+	
+	@Test
+	public void testNames() throws IOException {
+		
+		addToDatabase db = new addToDatabase();
+		db.initConnection();
+		
+		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
+		
+		String TeamAName = db.getTeamNameByID("642");
+		String TeamBName = db.getTeamNameByID("655");
+		
+		System.out.println("TeamA name : "+TeamAName);
+		System.out.println("TeamB name : "+TeamBName);
+		
+		db.closeConnection();
+	}
+	
+	
 	//@Test
 	public void test() throws IOException {
 		addToDatabase db = new addToDatabase();
@@ -81,7 +100,7 @@ public class databaseTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void test3() throws IOException {
 		addToDatabase db = new addToDatabase();
 		db.initConnection();
