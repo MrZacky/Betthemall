@@ -227,29 +227,23 @@ public class addToDatabase {
 				 * If team A isn't exist in the database, insert team A to the
 				 * database
 				 */
-				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamA() + "'";// System.out.println(sql);
-				rs = stmt.executeQuery(sql);
-				t = rs.next();
-				if (!t) {
+				if (getTeamNamesIDByTeamName(match.returnTeamA()) == -1) {
 					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
 					rs = stmt.executeQuery(sql);
 					rs.next();
 				}
-				int idA = rs.getInt("id");
+				int idA = getTeamNamesIDByTeamName(match.returnTeamA());
 
 				/**
 				 * If team B isn't exist in the database, insert team B to the
 				 * database.
 				 */
-				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamB() + "'";// System.out.println(sql);
-				rs = stmt.executeQuery(sql);
-				t = rs.next();
-				if (!t) {
-					addUnknownTeamNameToDatabase(match.returnTeamB(), match.returnLeague());
+				if (getTeamNamesIDByTeamName(match.returnTeamB()) == -1) {
+					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
 					rs = stmt.executeQuery(sql);
 					rs.next();
 				}
-				int idB = rs.getInt("id");
+				int idB = getTeamNamesIDByTeamName(match.returnTeamB());
 
 				/**
 				 * If given match isn't exist in the database, insert match to
@@ -346,7 +340,7 @@ public class addToDatabase {
 	 * 
 	 * If Team Name exist for TeamID returns Team Name else returns -1
 	 **/
-	public int selectTeamNameById(String TeamID){
+	public int getTeamNamesIDByTeamName(String TeamName){
 		if (connection != null) {
 			ResultSet rs = null;
 			Statement stmt = null;
@@ -359,7 +353,7 @@ public class addToDatabase {
 				 * If team A isn't exist in the database, insert team A to the
 				 * database
 				 */
-				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + TeamID + "'";// System.out.println(sql);
+				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + TeamName + "'";// System.out.println(sql);
 				rs = stmt.executeQuery(sql);
 				t = rs.next();
 				if (t){
@@ -395,29 +389,23 @@ public class addToDatabase {
 				 * If team A isn't exist in the database, insert team A to the
 				 * database
 				 */
-				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamA() + "'";// System.out.println(sql);
-				rs = stmt.executeQuery(sql);
-				t = rs.next();
-				if (!t) {
+				if (getTeamNamesIDByTeamName(match.returnTeamA()) == -1) {
 					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
 					rs = stmt.executeQuery(sql);
 					rs.next();
 				}
-				int idA = rs.getInt("id");
+				int idA = getTeamNamesIDByTeamName(match.returnTeamA());
 
 				/**
-				 * If given match isn't exist in the database, insert match to
-				 * the database
+				 * If team B isn't exist in the database, insert team B to the
+				 * database.
 				 */
-				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + match.returnTeamB() + "'";// System.out.println(sql);
-				rs = stmt.executeQuery(sql);
-				t = rs.next();
-				if (!t) {
-					addUnknownTeamNameToDatabase(match.returnTeamB(), match.returnLeague());
+				if (getTeamNamesIDByTeamName(match.returnTeamB()) == -1) {
+					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
 					rs = stmt.executeQuery(sql);
 					rs.next();
 				}
-				int idB = rs.getInt("id");
+				int idB = getTeamNamesIDByTeamName(match.returnTeamB());
 
 				/**
 				 * If given match isn't exist in the database, insert match to
@@ -459,8 +447,6 @@ public class addToDatabase {
 			logMaker.logError("Failed connection with database.");
 	}
 
-	
-	
 	public void addUnknownTeamNameToDatabase(String name, String league) {
 		ResultSet rs = null;
 		Statement stmt = null;

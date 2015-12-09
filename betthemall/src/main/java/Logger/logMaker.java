@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -86,27 +87,27 @@ public class logMaker {
 
 	public static void logAdd (String msg) {
 		//System.out.println("[ADD] " + msg);
-		logAdder("[ADD] " + msg);
+		logAdder("[ADD] " + new Date() + " " + msg);
 	}
 	
 	public static void logInfo (String msg) {
 		//System.out.println("[INFO] " + msg);
-		logAdder("[INFO] " + msg);
+		logAdder("[INFO] " + new Date() + " " + msg);
 	}
 	
 	public static void logUpdate (String msg) {
 		//System.out.println("[UPDATE] " + msg);
-		logAdder("[UPDATE] " + msg);
+		logAdder("[UPDATE] " + new Date() + " " + msg);
 	}
 	
 	public static void logWarrning (String msg) {
 		//System.out.println("[WARNING] " + msg);
-		logAdder("[WARNING] " + msg);
+		logAdder("[WARNING] " + new Date() + " " + msg);
 	}
 	
 	public static void logError (String msg) {
 		//System.out.println("[ERROR] " + msg);
-		logAdder("[ERROR] " + msg);
+		logAdder("[ERROR] " + new Date() + " " + msg);
 	}
 
 	
