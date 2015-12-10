@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,11 +12,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import Database.addToDatabase;
-import Logger.logMaker;
-import Structure.footballMatch;
+import Database.DatabaseManager;
+import Logger.LogMaker;
+import Structure.FootballMatch;
 
-public class parseLiveScore {
+public class ParseLiveScore {
 
 	private static String[] urls = { "http://www.livescore.com/soccer/england/premier-league/results/all/",
 			"http://www.livescore.com/soccer/spain/primera-division/results/all/",
@@ -25,13 +26,14 @@ public class parseLiveScore {
 			"http://www.livescore.com/soccer/poland/ekstraklasa/results/all/" };
 
 	private static String[] leagueShort = { "UK1", "ES1", "DE1", "IT1", "FR1", "PL1" };
-
+	
+	static LogMaker logMaker = LogMaker.getInstance();
 	
 	public String webName;
-	ArrayList<footballMatch> matchesResults = new ArrayList<footballMatch>();
-	addToDatabase db = new addToDatabase();
 
-	public parseLiveScore() {
+	DatabaseManager db = new DatabaseManager();
+
+	public ParseLiveScore() {
 		this.webName = "LiveScore.com";
 	}
 
@@ -46,12 +48,27 @@ public class parseLiveScore {
 		System.out.println("all urls parsed.");
 		db.closeConnection();
 	}
+	
+	public void findMatchesAndAddThemToDatabase(String url, String leagueShort){
+		
+		ArrayList<FootballMatch> matchesResults = null;
+		try {
+			matchesResults = findMatches(url, leagueShort);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logMaker.logError(e.getMessage());
+		}
+		
+		addMatchesToDatabase(matchesResults);
+	}
 
-	public void findMatches(String url, String leagueShort) throws IOException {
+	public ArrayList<FootballMatch> findMatches(String url, String leagueShort) throws IOException {
 		/* Don't add matches to database with any error */
 		Boolean error = false;
 		
 		Document doc = Jsoup.connect(url).get();
+		
+		ArrayList<FootballMatch> matchesResults = new ArrayList<FootballMatch>();
 		// System.out.println(doc.toString());
 
 		/* Example framework options */
@@ -159,12 +176,12 @@ public class parseLiveScore {
 				
 				/* Don't add matches to database with any error */
 				if (error == false){
-					matchesResults.add(new footballMatch(data, teamAID, teamBID, scoreA, scoreB, leagueShort));
+					matchesResults.add(new FootballMatch(data, teamAID, teamBID, scoreA, scoreB, leagueShort));
 				}	
 			}
 
 		}
-		addMatchesToDatabase(matchesResults);
+		return matchesResults;
 	}
 
 	/**
@@ -207,7 +224,7 @@ public class parseLiveScore {
 	}
 
 	/** Adding many matches to the Database **/
-	public void addMatchesToDatabase(ArrayList<footballMatch> matches) {
+	public void addMatchesToDatabase(ArrayList<FootballMatch> matches) {
 		for (int k = 0; k < matches.size(); k++) {
 			// System.out.println(matches.get(k).returnMatchResult());
 			addMatchToDatabase(matches.get(k));
@@ -215,7 +232,7 @@ public class parseLiveScore {
 	}
 
 	/** Adding single match to the Database **/
-	public void addMatchToDatabase(footballMatch match) {
+	public void addMatchToDatabase(FootballMatch match) {
 		db.addMatchResultToDatabase(match);
 	}
 

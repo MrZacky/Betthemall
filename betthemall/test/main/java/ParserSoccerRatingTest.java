@@ -2,12 +2,12 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import org.junit.Test;
 
-import Crawler.IncommingMatchesParsers.parseSoccerRating;
+import Crawler.IncommingMatchesParsers.ParseSoccerRating;
 
 
-public class parserSoccerRatingTest {
+public class ParserSoccerRatingTest {
 
-	parseSoccerRating parser = new parseSoccerRating();
+	ParseSoccerRating parser = new ParseSoccerRating();
 	
 	/*@Test 
 	public void testHomeAndAwayTeam() throws IOException {

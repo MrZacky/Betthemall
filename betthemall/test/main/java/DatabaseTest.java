@@ -7,16 +7,16 @@ import java.util.List;
 
 import org.junit.Test;
 
-import Database.addToDatabase;
-import Logger.logMaker;
-import Structure.footballMatch;
+import Database.DatabaseManager;
+import Logger.LogMaker;
+import Structure.FootballMatch;
 
-public class databaseTest {
+public class DatabaseTest {
 	
 	//@Test
 	public void testNames() throws IOException {
 		
-		addToDatabase db = new addToDatabase();
+		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
 		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
@@ -33,16 +33,16 @@ public class databaseTest {
 	
 	@Test
 	public void test() throws IOException {
-		addToDatabase db = new addToDatabase();
+		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
 		int TeamAName = 846;
 		int TeamBName = 847;
 		
-		List<footballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,false);
-		List<footballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,false);
-		List<footballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,true);
-		List<footballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,true);
+		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,false);
+		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,false);
+		List<FootballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,true);
+		List<FootballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,true);
 		
 		
 		System.out.println("TeamAWitoutTeamBMatchesResults : ");
@@ -75,10 +75,10 @@ public class databaseTest {
 	
 	//@Test
 	public void test2() throws IOException {
-		addToDatabase db = new addToDatabase();
+		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		List<footballMatch> incommingMatches = db.getAllNewIncommingMatches();
+		List<FootballMatch> incommingMatches = db.getAllNewIncommingMatches();
 		
 		System.out.println("incommingMatches List Size : "+incommingMatches.size());
 		
@@ -99,10 +99,10 @@ public class databaseTest {
 	
 	//@Test
 	public void test3() throws IOException {
-		addToDatabase db = new addToDatabase();
+		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		List<footballMatch> incommingMatches = db.getAllNewIncommingMatches();
+		List<FootballMatch> incommingMatches = db.getAllNewIncommingMatches();
 		
 		db.addFinalMatchResultToDatabase(incommingMatches.get(0));
 		

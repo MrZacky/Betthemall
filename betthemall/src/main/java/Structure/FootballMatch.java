@@ -1,5 +1,5 @@
 package Structure;
-public class footballMatch {
+public class FootballMatch {
 	
 		private String ID;
 		private String data;
@@ -15,7 +15,7 @@ public class footballMatch {
 		private double winBpercent;
 		private String league;
 		
-		public footballMatch(String data, int teamAID, int teamBID,  double winA, double draw, double winB, String league) {
+		public FootballMatch(String data, int teamAID, int teamBID,  double winA, double draw, double winB, String league) {
 			this.data  = data;
 			this.teamAID = teamAID;
 			this.teamBID = teamBID;
@@ -26,7 +26,7 @@ public class footballMatch {
 			changeOddToPerCent();
 		}
 		
-		public footballMatch(String ID, String data, int teamAID, int teamBID,  double winA, double draw, double winB, String league) {
+		public FootballMatch(String ID, String data, int teamAID, int teamBID,  double winA, double draw, double winB, String league) {
 			this.ID = ID;
 			this.data  = data;
 			this.teamAID = teamAID;
@@ -38,7 +38,7 @@ public class footballMatch {
 			changeOddToPerCent();
 		}
 		
-		public footballMatch(String data, int teamAID, int teamBID,  int scoreA, int scoreB, String league) {
+		public FootballMatch(String data, int teamAID, int teamBID,  int scoreA, int scoreB, String league) {
 			this.data  = data;
 			this.teamAID = teamAID;
 			this.teamBID = teamBID;

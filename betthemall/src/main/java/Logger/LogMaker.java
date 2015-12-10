@@ -15,21 +15,50 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
-public class logMaker {
+public class LogMaker {
 	
-	static File file = null;
+	private static LogMaker instance = null;
 	
-	static String SFTPHOST = "91.189.37.233";
-	static int SFTPPORT = 22;
-	static String SFTPUSER = "root";
-	static String SFTPPASS = "Wakacje123";
-	static String SFTPWORKINGDIR = "/root/betthemall/logs";
+	private static File file = null;
+	
+	private static String SFTPHOST = "91.189.37.233";
+	private static int SFTPPORT = 22;
+	private static String SFTPUSER = "root";
+	private static String SFTPPASS = "Wakacje123";
+	private static String SFTPWORKINGDIR = "/root/betthemall/logs";
 
-	static Session session = null;
-	static Channel channel = null;
-	static ChannelSftp channelSftp = null;
+	private static Session session = null;
+	private static Channel channel = null;
+	private static ChannelSftp channelSftp = null;
+	
+	public LogMaker (){
+		try {
+			JSch jsch = new JSch();
+			session = jsch.getSession(SFTPUSER, SFTPHOST, SFTPPORT);
+			session.setPassword(SFTPPASS);
+			java.util.Properties config = new java.util.Properties();
+			config.put("StrictHostKeyChecking", "no");
+			session.setConfig(config);
+			session.connect();
+			channel = session.openChannel("sftp");
+			channel.connect();
+			channelSftp = (ChannelSftp) channel;
+			channelSftp.cd(SFTPWORKINGDIR);
+			//File f = new File("test.txt");
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public static LogMaker getInstance() {
+	      if(instance == null) {
+	         instance = new LogMaker();
+	      }
+	      return instance;
+	}
 
-    private static void logAdder(String msg)
+    private void logAdder(String msg)
     {	
     	try{
     		
@@ -37,12 +66,7 @@ public class logMaker {
 		    //get current date time with Calendar()
 		    Calendar cal = Calendar.getInstance();
 		    
-    		if (file==null){
-    			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
-    			file = new File(newNameOfFile);
-    			file.createNewFile();
-    		}
-    		else if ((file!=null) && (!file.exists())){
+    		if (((file==null) || ((file!=null) && (!file.exists())))){
     			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
     			file = new File(newNameOfFile);
     			file.createNewFile();
@@ -65,19 +89,6 @@ public class logMaker {
     	}
     	
 		try {
-			JSch jsch = new JSch();
-			session = jsch.getSession(SFTPUSER, SFTPHOST, SFTPPORT);
-			session.setPassword(SFTPPASS);
-			java.util.Properties config = new java.util.Properties();
-			config.put("StrictHostKeyChecking", "no");
-			session.setConfig(config);
-			session.connect();
-			channel = session.openChannel("sftp");
-			channel.connect();
-			channelSftp = (ChannelSftp) channel;
-			channelSftp.cd(SFTPWORKINGDIR);
-			//File f = new File("test.txt");
-		
 			channelSftp.put(new FileInputStream(file), file.getName());
 			
 		} catch (Exception ex) {
@@ -85,27 +96,27 @@ public class logMaker {
 		}
     }
 
-	public static void logAdd (String msg) {
+	public void logAdd (String msg) {
 		//System.out.println("[ADD] " + msg);
 		logAdder("[ADD] " + new Date() + " " + msg);
 	}
 	
-	public static void logInfo (String msg) {
+	public void logInfo (String msg) {
 		//System.out.println("[INFO] " + msg);
 		logAdder("[INFO] " + new Date() + " " + msg);
 	}
 	
-	public static void logUpdate (String msg) {
+	public void logUpdate (String msg) {
 		//System.out.println("[UPDATE] " + msg);
 		logAdder("[UPDATE] " + new Date() + " " + msg);
 	}
 	
-	public static void logWarrning (String msg) {
+	public void logWarrning (String msg) {
 		//System.out.println("[WARNING] " + msg);
 		logAdder("[WARNING] " + new Date() + " " + msg);
 	}
 	
-	public static void logError (String msg) {
+	public void logError (String msg) {
 		//System.out.println("[ERROR] " + msg);
 		logAdder("[ERROR] " + new Date() + " " + msg);
 	}

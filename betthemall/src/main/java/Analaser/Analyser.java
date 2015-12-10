@@ -3,13 +3,13 @@ package Analaser;
 import java.io.IOException;
 import java.util.List;
 
-import Database.addToDatabase;
-import Logger.logMaker;
-import Structure.footballMatch;
+import Database.DatabaseManager;
+import Logger.LogMaker;
+import Structure.FootballMatch;
 
 public class Analyser {
 	
-	addToDatabase db = new addToDatabase();
+	DatabaseManager db = new DatabaseManager();
 	
 	public void init() throws IOException {
 		db.initConnection();
@@ -22,14 +22,14 @@ public class Analyser {
 	
 	private void CalculateMatchesResults() {
 		// Pobranie wszystkich nie policzonych meczy
-		List<footballMatch> matches = db.getAllNewIncommingMatches();
+		List<FootballMatch> matches = db.getAllNewIncommingMatches();
 		for (int i=0;i<matches.size();i++){
 			CalculateMatchResults(matches.get(i));	
 		}
 	}
 
 	//1. Pobranie zbliżającego się meczu (drużyna A przeciw drużynie B)
-	private void CalculateMatchResults(footballMatch currentMatch) {
+	private void CalculateMatchResults(FootballMatch currentMatch) {
 		
 		int TeamAID = currentMatch.returnTeamA();
 		int TeamBID = currentMatch.returnTeamB();
@@ -41,13 +41,13 @@ public class Analyser {
 		//TODO 1 
 		/*Należy Dla drużyny A i B pobrać wszystkie mecze z Matches_Results*/
 		// Rozegrane mecze Teamu A bez meczów z Teamem B
-		List<footballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, false);
+		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, false);
 		// Rozegrane mecze Teamu B bez meczów z Teamem A
-		List<footballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, false);
+		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, false);
 		// Rozegrane mecze Teamu A przeciwko Teamu B (Drużyna A grała u siebie)
-		List<footballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, true);
+		List<FootballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, true);
 		// Rozegrane mecze Teamu B przeciwko Teamu A (Drużyna B grała u siebie)
-		List<footballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, true);
+		List<FootballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, true);
 	//3. Korekcja współczynników skuteczności względem ostatnio rozegranych meczów (czy były wygrane, czy przegrane i z jaką przewagą)
 	//4. Korekcja współczynników skuteczności na podstawie wiadomości czy dane drużyny lepiej grają na wyjazdach czy u siebie.
 	

@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Batches.WorkerProcess;
-import Logger.logMaker;
-import Structure.footballMatch;
+import Logger.LogMaker;
+import Structure.FootballMatch;
 
 /**
  * Class addToDatabase connecting with database. Methods: adding match to
  * database, adding team to database
  */
-public class addToDatabase {
+public class DatabaseManager {
 
 	private static final String HOST = "91.189.37.233";
 	private static final String PORT = "5432";
@@ -27,6 +27,8 @@ public class addToDatabase {
 	private static final String DRIVER = "org.postgresql.Driver";
 	private static final String URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE_NAME;
 	public Connection connection = null;
+	
+	static LogMaker logMaker = LogMaker.getInstance();
 
 	public int addMatches = 0;
 	public int addFinalMatches = 0;
@@ -50,7 +52,7 @@ public class addToDatabase {
 		return conn;
 	}
 
-	public addToDatabase() {
+	public DatabaseManager() {
 
 	}
 
@@ -123,11 +125,11 @@ public class addToDatabase {
 	 * 
 	 * @return matchesList
 	 */
-	public List<footballMatch> getAllNewIncommingMatches() {
+	public List<FootballMatch> getAllNewIncommingMatches() {
 		ResultSet rs = null;
 		Statement stmt = null;
 		String sql = null;
-		List<footballMatch> matchesList = new ArrayList();
+		List<FootballMatch> matchesList = new ArrayList();
 
 		try {
 			stmt = connection.createStatement();
@@ -149,7 +151,7 @@ public class addToDatabase {
 				double Draw = rs.getDouble("Draw");
 				double WinB = rs.getDouble("WinB");
 				String League = rs.getString("League");
-				footballMatch match = new footballMatch(MatchID, MatchDate, TeamA, TeamB, WinA, Draw, WinB, League);
+				FootballMatch match = new FootballMatch(MatchID, MatchDate, TeamA, TeamB, WinA, Draw, WinB, League);
 				matchesList.add(match);
 			}
 		} catch (SQLException e) {
@@ -161,12 +163,12 @@ public class addToDatabase {
 	}
 
 	/** Get all matches results from database of teamA **/
-	public List<footballMatch> getMatchesResultsFromDatabase(int teamAID,int teamBID,
+	public List<FootballMatch> getMatchesResultsFromDatabase(int teamAID,int teamBID,
 			boolean MatchesOnlyAgaintsTeamB) {
 		ResultSet rs = null;
 		Statement stmt = null;
 		String sql = null;
-		List<footballMatch> matchesList = new ArrayList();
+		List<FootballMatch> matchesList = new ArrayList();
 		// public footballMatch(String data, String teamA, String teamB, double
 		// winA, double draw, double winB, String league);
 		boolean t;
@@ -198,7 +200,7 @@ public class addToDatabase {
 				int TeamAScore = rs.getInt("TeamA_Score");
 				int TeamBScore = rs.getInt("TeamB_Score");
 				String League = rs.getString("League");
-				footballMatch match = new footballMatch(MatchDate, TeamA, TeamB, TeamAScore, TeamBScore, League);
+				FootballMatch match = new FootballMatch(MatchDate, TeamA, TeamB, TeamAScore, TeamBScore, League);
 				matchesList.add(match);
 			}
 		} catch (SQLException e) {
@@ -214,7 +216,7 @@ public class addToDatabase {
 	 * Method which add match as line to database id TeamA_ID, TeamB_ID
 	 * MatchDate, Draw, WinA, WinB
 	 */
-	public void addMatchToDatabase(footballMatch match, String web) {
+	public void addMatchToDatabase(FootballMatch match, String web) {
 		if (connection != null) {
 			ResultSet rs = null;
 			Statement stmt = null;
@@ -271,7 +273,7 @@ public class addToDatabase {
 			logMaker.logError("Failed connection with database.");
 	}
 
-	public void addFinalMatchResultToDatabase(footballMatch finalMatch) {
+	public void addFinalMatchResultToDatabase(FootballMatch finalMatch) {
 		if (connection != null) {
 			ResultSet rs = null;
 			Statement stmt = null;
@@ -358,7 +360,7 @@ public class addToDatabase {
 	/**
 	 * Method which add team as line to database id, TeamID, name
 	 */
-	public void addMatchResultToDatabase(footballMatch match) {
+	public void addMatchResultToDatabase(FootballMatch match) {
 		if (connection != null) {
 			ResultSet rs = null;
 			Statement stmt = null;

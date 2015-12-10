@@ -9,9 +9,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import Database.addToDatabase;
-import Logger.logMaker;
-import Structure.footballMatch;
+import Database.DatabaseManager;
+import Logger.LogMaker;
+import Structure.FootballMatch;
 
 
 	/**Klasa parsująca stronę http://www.soccer-rating.com
@@ -21,7 +21,7 @@ import Structure.footballMatch;
 	 * 		dodania drużyn do tabeli TEAM_NAMES
 	 * 		wyszukania meczów przyszłych i histori meczów dla danej drużyny
 	 * 		dodania tych meczów do tabeli FOOTBALL_MATCHES*/
-public class parseSoccerRating{
+public class ParseSoccerRating{
 
 	private static String[] urls= {	"http://www.soccer-rating.com/England/",
 								   	"http://www.soccer-rating.com/Spain/",
@@ -36,11 +36,13 @@ public class parseSoccerRating{
 											"FR1",
 											"PL1"};
 	
-	public String webName;
-	ArrayList<footballMatch> matches;
-	addToDatabase db = new addToDatabase();
+	static LogMaker logMaker = LogMaker.getInstance();
 	
-	public parseSoccerRating()  {
+	public String webName;
+	ArrayList<FootballMatch> matches;
+	DatabaseManager db = new DatabaseManager();
+	
+	public ParseSoccerRating()  {
 		this.webName = "Soccer-Rating.com";
 	}
 	
@@ -96,7 +98,7 @@ public class parseSoccerRating{
 	    /*while (!tr.get(k).text().startsWith("30")) { //pierwszt mecz na strone ma jakby indeks 30
 	       k = k + 1; 
 	    }*/
-	    matches = new ArrayList<footballMatch>();
+	    matches = new ArrayList<FootballMatch>();
 	    for (int k = 1 ; k < tr.size(); k++) { //tr.size()
 	    	temp = tr.get(k).select("td");
 	    	//System.out.println(temp);
@@ -114,7 +116,7 @@ public class parseSoccerRating{
 	    		int TeamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(awayTeam(temp.get(2).text()), League);
 	    		
 	    		
- 			matches.add(new footballMatch(changeDate(temp.get(1).text()), 
+ 			matches.add(new FootballMatch(changeDate(temp.get(1).text()), 
  											TeamAID,
  											TeamBID, 
      										changeOdd(temp.get(3).text()), 
@@ -165,22 +167,22 @@ public class parseSoccerRating{
 				else 
 					return true;
 			} catch (java.text.ParseException e) {
-				System.out.println("[WARRNING] Błąd porównania daty");
+				System.out.println("[WARNING] Błąd porównania daty");
 				logMaker.logError(e.getMessage());
 				//e.printStackTrace();
 			}
 		 return false; 	 
 	 }
 	
-	 public void addMatchesToDatabase(ArrayList<footballMatch> matches) {
+	 public void addMatchesToDatabase(ArrayList<FootballMatch> matches) {
 			for (int k = 0; k < matches.size(); k++)
 				if (compareDateWithToday(matches.get(k).returnDate())){
 		    		addMatchToDatabase(matches.get(k));
 		    	}	
-				else return; // daty sa posortowane ;)
+				else return;
 		}
 		
-	public void addMatchToDatabase(footballMatch match) {
+	public void addMatchToDatabase(FootballMatch match) {
 			db.addMatchToDatabase(match, webName);
 		}
 

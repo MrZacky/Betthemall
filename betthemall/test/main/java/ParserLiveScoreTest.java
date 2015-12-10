@@ -4,14 +4,14 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import Crawler.MatchesResultsParsers.parseLiveScore;
+import Crawler.MatchesResultsParsers.ParseLiveScore;
 
 
-public class parserLiveScoreTest {
+public class ParserLiveScoreTest {
 
 	@Test
 	public void test() throws IOException {
-		parseLiveScore parser = new parseLiveScore();
+		ParseLiveScore parser = new ParseLiveScore();
 		//System.out.println(parser.changeDate("Sunday 28 December 2014"));
 		parser.init();
 	}
