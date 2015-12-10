@@ -48,15 +48,17 @@ public class Analyser {
 		List<FootballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, true);
 		// Rozegrane mecze Teamu B przeciwko Teamu A (Drużyna B grała u siebie)
 		List<FootballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, true);
-	//3. Korekcja współczynników skuteczności względem ostatnio rozegranych meczów (czy były wygrane, czy przegrane i z jaką przewagą)
+		
+	//3. Korekcja współczynników skuteczności względem ostatnio rozegranych meczów między sobą (czy były wygrane, czy przegrane i z jaką przewagą)	
+	//3. Korekcja współczynników skuteczności względem ostatnio rozegranych meczów z innymi drużynami(czy były wygrane, czy przegrane i z jaką przewagą)
 	//4. Korekcja współczynników skuteczności na podstawie wiadomości czy dane drużyny lepiej grają na wyjazdach czy u siebie.
 	
 	//5. Korekcja współczynników na podstawie kursów bukmacherów.	
 		
 	//6. Dowolne możliwe korekcje na podstawie posiadanych danych.
 		
-	//7. Oznaczenie, że analiza dla podanego meczu została wykonana.
-
+	//7. Dodanie wyniku do bazy danych i oznaczenie, że analiza dla danego meczu została wykonana
+		//addFinalMatchResultToDatabase
 	}
 
 }

@@ -429,6 +429,7 @@ public class DatabaseManager {
 			sql = "SELECT id, \"Name\" FROM public.\"TEAM_NAMES\" WHERE \"Name\" like '" + name + "';";
 			rs = stmt.executeQuery(sql);
 			t = rs.next();
+			id = Integer.parseInt(rs.getString("id"));
 			if (!t) {
 				sql = "SELECT nextval('public.\"TEAM_NAMES_SEQ\"')";
 				rs = stmt.executeQuery(sql);
