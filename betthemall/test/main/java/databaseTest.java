@@ -13,7 +13,7 @@ import Structure.footballMatch;
 
 public class databaseTest {
 	
-	@Test
+	//@Test
 	public void testNames() throws IOException {
 		
 		addToDatabase db = new addToDatabase();
@@ -31,7 +31,7 @@ public class databaseTest {
 	}
 	
 	
-	//@Test
+	@Test
 	public void test() throws IOException {
 		addToDatabase db = new addToDatabase();
 		db.initConnection();
