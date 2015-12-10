@@ -103,7 +103,7 @@ public class DatabaseManager {
 		try {
 			stmt = connection.createStatement();
 			/** Select all matches results of teamA againts teamB **/
-			sql = "SELECT \"Name\" FROM public.\"TEAM_NAMES\"" + "WHERE id = '" + TeamID + "'";
+			sql = "SELECT \"Name\" FROM public.\"TEAM_NAMES\"" + "WHERE OriginalTeamID = '" + TeamID + "'";
 
 			rs = stmt.executeQuery(sql);
 
@@ -441,9 +441,9 @@ public class DatabaseManager {
 
 			}
 			/** Else print message this team name already exist. */
-			else if (t) {
+			/*else if (t) {
 				logMaker.logWarrning("This team is already in database: " + name);
-			}
+			}*/
 		} catch (SQLException e) {
 			logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
 			logMaker.logError(e.getMessage());

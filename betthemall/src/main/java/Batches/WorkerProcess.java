@@ -29,8 +29,8 @@ public class WorkerProcess
     		System.out.println("Starting a process...");
     		error = false;
     		
-    		try {
-    			/* Parsing results of matches */	
+    		/** Parsing results of matches **/	
+    		/*try {
     			System.out.println("Parsing LiveScore started");
     			logMaker.logInfo("Parsing LiveScore started");
     			new ParseLiveScore().init();
@@ -41,14 +41,16 @@ public class WorkerProcess
 				logMaker.logError("During parsing LiveScore exception occurred");
 				e.printStackTrace();
 				error=true;
-			}
+			}*/
     		
+			/** Parsing new matches **/
     		try {
-    			/* Parsing new matches */	
+    			System.out.println("Parsing SoccerRating started");
+    			logMaker.logInfo("Parsing SoccerRating started");
     			new ParseSoccerRating().init();	
-    			System.out.println("Parsing SoccerRating completed successfully");
 			} catch (Exception e) {
 				System.out.println("During parsing SoccerRating exception occurred");
+				logMaker.logError("During parsing SoccerRating exception occurred");
 				e.printStackTrace();
 				error=true;
 				
