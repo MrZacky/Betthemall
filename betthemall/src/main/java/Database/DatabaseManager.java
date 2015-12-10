@@ -28,7 +28,7 @@ public class DatabaseManager {
 	private static final String URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE_NAME;
 	public Connection connection = null;
 	
-	static LogMaker logMaker = LogMaker.getInstance();
+	static LogMaker logMaker;
 
 	public int addMatches = 0;
 	public int addFinalMatches = 0;
@@ -53,7 +53,7 @@ public class DatabaseManager {
 	}
 
 	public DatabaseManager() {
-
+		logMaker = LogMaker.getInstance();
 	}
 
 	public void initConnection() {

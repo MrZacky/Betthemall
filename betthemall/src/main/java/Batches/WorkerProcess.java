@@ -15,7 +15,7 @@ public class WorkerProcess
 	// Uruchamianie co [time] od startu aplikacji
 	static int time = 1000*60*60; // Proces uruchamiany co godzinę
 	private static Boolean newData = false;
-	static LogMaker logMaker = LogMaker.getInstance();
+	static LogMaker logMaker;
 
 	
 	public static void sendSignalNewDataSent(){
@@ -24,6 +24,8 @@ public class WorkerProcess
 	
     public static void main(String[] args) throws IOException
     {
+    	logMaker = LogMaker.getInstance();
+    	
     	Boolean error;
     	while(true){
     		System.out.println("Starting a process...");

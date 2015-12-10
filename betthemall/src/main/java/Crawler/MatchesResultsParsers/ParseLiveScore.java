@@ -27,7 +27,7 @@ public class ParseLiveScore {
 
 	private static String[] leagueShort = { "UK1", "ES1", "DE1", "IT1", "FR1", "PL1" };
 	
-	static LogMaker logMaker = LogMaker.getInstance();
+	static LogMaker logMaker;
 	
 	public String webName;
 
@@ -38,6 +38,7 @@ public class ParseLiveScore {
 	}
 
 	public void init() throws IOException {
+		logMaker = LogMaker.getInstance();
 		db.initConnection();
 		System.out.println("Starting parsing urls...");
 		for (int i = 0; i < urls.length; i++) {

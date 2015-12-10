@@ -36,7 +36,7 @@ public class ParseSoccerRating{
 											"FR1",
 											"PL1"};
 	
-	static LogMaker logMaker = LogMaker.getInstance();
+	static LogMaker logMaker;
 	
 	public String webName;
 	ArrayList<FootballMatch> matches;
@@ -47,6 +47,7 @@ public class ParseSoccerRating{
 	}
 	
 	public void init(){
+		logMaker = LogMaker.getInstance();
 		db.initConnection();
 		for (int i = 0; i < urls.length; i++) {
 			System.out.println("Parsing..." + urls[i]);
