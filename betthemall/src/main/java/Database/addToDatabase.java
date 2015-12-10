@@ -92,7 +92,7 @@ public class addToDatabase {
 	 * @return TeamName - if TeamID exist return name of team for that ID, else
 	 *         return "Name not found";
 	 */
-	public String getTeamNameByID(String TeamID) {
+	public String getTeamNameByID(int TeamID) {
 		ResultSet rs = null;
 		Statement stmt = null;
 		String sql = null;
@@ -142,8 +142,8 @@ public class addToDatabase {
 				// String teamB, double winA, double draw, double winB, String
 				// league)
 				String MatchID = rs.getString("ID");
-				String TeamA = rs.getString("TeamA_ID");
-				String TeamB = rs.getString("TeamB_ID");
+				int TeamA = rs.getInt("TeamA_ID");
+				int TeamB = rs.getInt("TeamB_ID");
 				String MatchDate = rs.getString("MatchDate");
 				double WinA = rs.getDouble("WinA");
 				double Draw = rs.getDouble("Draw");
@@ -161,7 +161,7 @@ public class addToDatabase {
 	}
 
 	/** Get all matches results from database of teamA **/
-	public List<footballMatch> getMatchesResultsFromDatabase(String teamAID, String teamBID,
+	public List<footballMatch> getMatchesResultsFromDatabase(int teamAID,int teamBID,
 			boolean MatchesOnlyAgaintsTeamB) {
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -192,8 +192,8 @@ public class addToDatabase {
 			while (rs.next()) {
 				// public footballMatch(String data, String teamA, String teamB,
 				// int scoreA, int scoreB, String league) {
-				String TeamA = rs.getString("TeamA_ID");
-				String TeamB = rs.getString("TeamB_ID");
+				int TeamA = rs.getInt("TeamA_ID");
+				int TeamB = rs.getInt("TeamB_ID");
 				String MatchDate = rs.getString("MatchDate");
 				int TeamAScore = rs.getInt("TeamA_Score");
 				int TeamBScore = rs.getInt("TeamB_Score");
@@ -223,27 +223,9 @@ public class addToDatabase {
 			try {
 				stmt = connection.createStatement();
 
-				/**
-				 * If team A isn't exist in the database, insert team A to the
-				 * database
-				 */
-				if (getTeamNamesIDByTeamName(match.returnTeamA()) == -1) {
-					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
-					rs = stmt.executeQuery(sql);
-					rs.next();
-				}
-				int idA = getTeamNamesIDByTeamName(match.returnTeamA());
+				int idA = match.returnTeamA();
 
-				/**
-				 * If team B isn't exist in the database, insert team B to the
-				 * database.
-				 */
-				if (getTeamNamesIDByTeamName(match.returnTeamB()) == -1) {
-					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
-					rs = stmt.executeQuery(sql);
-					rs.next();
-				}
-				int idB = getTeamNamesIDByTeamName(match.returnTeamB());
+				int idB = match.returnTeamB();
 
 				/**
 				 * If given match isn't exist in the database, insert match to
@@ -385,27 +367,9 @@ public class addToDatabase {
 			try {
 				stmt = connection.createStatement();
 
-				/**
-				 * If team A isn't exist in the database, insert team A to the
-				 * database
-				 */
-				if (getTeamNamesIDByTeamName(match.returnTeamA()) == -1) {
-					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
-					rs = stmt.executeQuery(sql);
-					rs.next();
-				}
-				int idA = getTeamNamesIDByTeamName(match.returnTeamA());
+				int idA = match.returnTeamA();
 
-				/**
-				 * If team B isn't exist in the database, insert team B to the
-				 * database.
-				 */
-				if (getTeamNamesIDByTeamName(match.returnTeamB()) == -1) {
-					addUnknownTeamNameToDatabase(match.returnTeamA(), match.returnLeague());
-					rs = stmt.executeQuery(sql);
-					rs.next();
-				}
-				int idB = getTeamNamesIDByTeamName(match.returnTeamB());
+				int idB = match.returnTeamB();
 
 				/**
 				 * If given match isn't exist in the database, insert match to
@@ -447,10 +411,11 @@ public class addToDatabase {
 			logMaker.logError("Failed connection with database.");
 	}
 
-	public void addUnknownTeamNameToDatabase(String name, String league) {
+	public int addUnknownTeamNameToDatabaseAndGetNewTeamID(String name, String league) {
 		ResultSet rs = null;
 		Statement stmt = null;
 		String sql = null;
+		int id = -1;
 		boolean t;
 		try {
 			stmt = connection.createStatement();
@@ -466,7 +431,7 @@ public class addToDatabase {
 				sql = "SELECT nextval('public.\"TEAM_NAMES_SEQ\"')";
 				rs = stmt.executeQuery(sql);
 				rs.next();
-				int id = Integer.parseInt(rs.getString(rs.getRow()));
+				id = Integer.parseInt(rs.getString(rs.getRow()));
 				sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"League\", \"Name\")" + "VALUES (" + id + ", '" + league
 						+ "'" + ", '" + name + "');";
 				stmt.executeUpdate(sql);
@@ -482,5 +447,7 @@ public class addToDatabase {
 			logMaker.logError(e.getMessage());
 			// e.printStackTrace();
 		}
+		
+		return id;
 	}
 }

@@ -3,8 +3,8 @@ public class footballMatch {
 	
 		private String ID;
 		private String data;
-		private String teamA;
-		private String teamB;
+		private int teamAID;
+		private int teamBID;
 		private double winA;
 		private double draw;
 		private double winB;
@@ -15,10 +15,10 @@ public class footballMatch {
 		private double winBpercent;
 		private String league;
 		
-		public footballMatch(String data, String teamA, String teamB,  double winA, double draw, double winB, String league) {
+		public footballMatch(String data, int teamAID, int teamBID,  double winA, double draw, double winB, String league) {
 			this.data  = data;
-			this.teamA = teamA;
-			this.teamB = teamB;
+			this.teamAID = teamAID;
+			this.teamBID = teamBID;
 			this.winA = winA;
 			this.draw = draw;
 			this.winB = winB;
@@ -26,11 +26,11 @@ public class footballMatch {
 			changeOddToPerCent();
 		}
 		
-		public footballMatch(String ID, String data, String teamA, String teamB,  double winA, double draw, double winB, String league) {
+		public footballMatch(String ID, String data, int teamAID, int teamBID,  double winA, double draw, double winB, String league) {
 			this.ID = ID;
 			this.data  = data;
-			this.teamA = teamA;
-			this.teamB = teamB;
+			this.teamAID = teamAID;
+			this.teamBID = teamBID;
 			this.winA = winA;
 			this.draw = draw;
 			this.winB = winB;
@@ -38,10 +38,10 @@ public class footballMatch {
 			changeOddToPerCent();
 		}
 		
-		public footballMatch(String data, String teamA, String teamB,  int scoreA, int scoreB, String league) {
+		public footballMatch(String data, int teamAID, int teamBID,  int scoreA, int scoreB, String league) {
 			this.data  = data;
-			this.teamA = teamA;
-			this.teamB = teamB;
+			this.teamAID = teamAID;
+			this.teamBID = teamBID;
 			this.scoreA = scoreA;
 			this.scoreB = scoreB;
 			this.league = league;
@@ -60,11 +60,11 @@ public class footballMatch {
 		public String returnID(){
 			return ID;
 		}
-		public String returnTeamA(){
-			return teamA;
+		public int returnTeamA(){
+			return teamAID;
 		}
-		public String returnTeamB(){
-			return teamB;
+		public int returnTeamB(){
+			return teamBID;
 		}
 		public String returnDate(){
 			return data;
@@ -99,15 +99,15 @@ public class footballMatch {
 		}
 		
 		public String returnFullMatchAsString() {
-			return (ID + " - " + teamA + " - " + teamB + " " + data + " " + winA + " " + winApercent + " "  + draw + " " + drawpercent + " "  + winB + " " + winBpercent + " " + league);
+			return (ID + " - " + teamAID + " - " + teamBID + " " + data + " " + winA + " " + winApercent + " "  + draw + " " + drawpercent + " "  + winB + " " + winBpercent + " " + league);
 		}
 		
 		public String returnMatchAsString() {
-			return (ID + " - " + teamA + " - " + teamB + " " + data + " " + winA + " " + draw + " " + winB + " " + league);
+			return (ID + " - " + teamAID + " - " + teamBID + " " + data + " " + winA + " " + draw + " " + winB + " " + league);
 		}
 		
 		public String returnMatchResult() {
-			return (data + " " + teamA + " - " + teamB + " " + scoreA + "-" + scoreB + " " + league);
+			return (data + " " + teamAID + " - " + teamBID + " " + scoreA + "-" + scoreB + " " + league);
 		}
 		
 		

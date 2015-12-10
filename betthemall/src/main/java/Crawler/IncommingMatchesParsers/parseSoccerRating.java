@@ -108,13 +108,19 @@ public class parseSoccerRating{
 	    		System.out.println(awayTeam(temp.get(2).text()));
 	    		System.out.println(changeDate(temp.get(1).text()));
 	    		System.out.println("------------------------------");*/
+	    		
+	    		String League = temp.get(6).text();
+	    		int TeamAID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(homeTeam(temp.get(2).text()), League);
+	    		int TeamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(awayTeam(temp.get(2).text()), League);
+	    		
+	    		
  			matches.add(new footballMatch(changeDate(temp.get(1).text()), 
-     										homeTeam(temp.get(2).text()),
-     										awayTeam(temp.get(2).text()), 
+ 											TeamAID,
+ 											TeamBID, 
      										changeOdd(temp.get(3).text()), 
      										changeOdd(temp.get(4).text()),
      										changeOdd(temp.get(5).text()),  
-     										temp.get(6).text()));	  
+     										League));	  
  			}
 	    }
 	    addMatchesToDatabase(matches);

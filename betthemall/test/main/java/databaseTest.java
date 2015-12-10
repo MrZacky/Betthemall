@@ -21,8 +21,8 @@ public class databaseTest {
 		
 		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
 		
-		String TeamAName = db.getTeamNameByID("642");
-		String TeamBName = db.getTeamNameByID("655");
+		String TeamAName = db.getTeamNameByID(642);
+		String TeamBName = db.getTeamNameByID(655);
 		
 		System.out.println("TeamA name : "+TeamAName);
 		System.out.println("TeamB name : "+TeamBName);
@@ -36,16 +36,13 @@ public class databaseTest {
 		addToDatabase db = new addToDatabase();
 		db.initConnection();
 		
-		String TeamAName = db.getTeamNameByID("846");
-		String TeamBName = db.getTeamNameByID("847");
+		int TeamAName = 846;
+		int TeamBName = 847;
 		
-		System.out.println("TeamA name : "+TeamAName);
-		System.out.println("TeamB name : "+TeamBName);
-		
-		List<footballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase("846","847",false);
-		List<footballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase("847","846",false);
-		List<footballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase("846","847",true);
-		List<footballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase("847","846",true);
+		List<footballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,false);
+		List<footballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,false);
+		List<footballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,true);
+		List<footballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,true);
 		
 		
 		System.out.println("TeamAWitoutTeamBMatchesResults : ");

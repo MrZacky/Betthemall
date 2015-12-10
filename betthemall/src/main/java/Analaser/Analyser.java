@@ -31,8 +31,8 @@ public class Analyser {
 	//1. Pobranie zbliżającego się meczu (drużyna A przeciw drużynie B)
 	private void CalculateMatchResults(footballMatch currentMatch) {
 		
-		String TeamA = currentMatch.returnTeamA();
-		String TeamB = currentMatch.returnTeamB();
+		int TeamAID = currentMatch.returnTeamA();
+		int TeamBID = currentMatch.returnTeamB();
 		
 	//2. Wyzerowanie współczynnika skuteczności drużyny A i B.
 		Double efficiencyA = 0.0;
@@ -41,13 +41,13 @@ public class Analyser {
 		//TODO 1 
 		/*Należy Dla drużyny A i B pobrać wszystkie mecze z Matches_Results*/
 		// Rozegrane mecze Teamu A bez meczów z Teamem B
-		List<footballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamA, TeamB, false);
+		List<footballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, false);
 		// Rozegrane mecze Teamu B bez meczów z Teamem A
-		List<footballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamB, TeamA, false);
+		List<footballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, false);
 		// Rozegrane mecze Teamu A przeciwko Teamu B (Drużyna A grała u siebie)
-		List<footballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamA, TeamB, true);
+		List<footballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, true);
 		// Rozegrane mecze Teamu B przeciwko Teamu A (Drużyna B grała u siebie)
-		List<footballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamB, TeamA, true);
+		List<footballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, true);
 	//3. Korekcja współczynników skuteczności względem ostatnio rozegranych meczów (czy były wygrane, czy przegrane i z jaką przewagą)
 	//4. Korekcja współczynników skuteczności na podstawie wiadomości czy dane drużyny lepiej grają na wyjazdach czy u siebie.
 	

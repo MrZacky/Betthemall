@@ -150,9 +150,16 @@ public class parseLiveScore {
 				// Testing gained Data
 				// System.out.println("("+data+";"+teamA+";"+teamB+";"+scoreA+";"+scoreB+";"+leagueShort+")");
 				
+				int teamAID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, leagueShort);
+				int teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, leagueShort);
+				
+				if (teamAID == -1 || teamBID == -1){
+					error = false;
+				}
+				
 				/* Don't add matches to database with any error */
 				if (error == false){
-					matchesResults.add(new footballMatch(data, teamA, teamB, scoreA, scoreB, leagueShort));
+					matchesResults.add(new footballMatch(data, teamAID, teamBID, scoreA, scoreB, leagueShort));
 				}	
 			}
 
