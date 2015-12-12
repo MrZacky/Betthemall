@@ -46,21 +46,33 @@ public class ParseSoccerRating{
 		this.webName = "Soccer-Rating.com";
 	}
 	
-	public void init(){
+	public void init() throws IOException{
 		logMaker = LogMaker.getInstance();
 		db.initConnection();
 		for (int i = 0; i < urls.length; i++) {
 			System.out.println("Parsing..." + urls[i]);
 			logMaker.logInfo("Parsing..." + urls[i]);
-			findLinksToTeams(urls[i], leagueShort[i]);
+			findMatchesAndAddThemToDatabase(urls[i], leagueShort[i]);
 		}
 		System.out.println("all urls parsed.");
 		db.closeConnection();
 	}
 	
 	
-	public void findLinksToTeams(String url, String leagueShort){
-		Document doc = null;
+	public void findMatchesAndAddThemToDatabase(String url, String leagueShort){
+	
+		ArrayList<FootballMatch> matches = null;
+		try {
+			matches = findMatches(url, leagueShort);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logMaker.logError(e.getMessage());
+		}
+		System.out.println("Number of matches found : "+matches.size());
+		addMatchesToDatabase(matches);
+		
+		
+		/*Document doc = null;
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
@@ -74,12 +86,12 @@ public class ParseSoccerRating{
 			//Jednorazowo dodaje druzyny do bazy danych sprawdzajac czy juz istnieja 
 			db.addTeamNameToDatabase(links.get(k).text());
 		}*/
-		for (int k = 0; k < links.size(); k++) {
-			findResultForTeam(links.get(k).attr("abs:href"), links.get(k).text(), leagueShort);
-		}
+		/*for (int k = 0; k < links.size(); k++) {
+			findMatches(links.get(k).attr("abs:href"), leagueShort);
+		}*/
 	}
 	
-	public void findResultForTeam(String url, String teamName, String leagueName){
+	public ArrayList<FootballMatch> findMatches(String url, String leagueName) throws IOException{
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(url).get();
@@ -90,27 +102,15 @@ public class ParseSoccerRating{
 		}
 		/*There are 3 bigtables classes, the third has got new matches*/
 		Element table = doc.getElementsByClass("bigtable").get(3);
-		//Element table1 = table.get(3);
-		//System.out.println(table1);
+
 	    Elements tr = table.select("tr");
 	    Elements temp;
 	    
-	  //  int k = 0;
-	    /*while (!tr.get(k).text().startsWith("30")) { //pierwszt mecz na strone ma jakby indeks 30
-	       k = k + 1; 
-	    }*/
 	    matches = new ArrayList<FootballMatch>();
-	    for (int k = 1 ; k < tr.size(); k++) { //tr.size()
+	    for (int k = 1 ; k < tr.size(); k++) {
 	    	temp = tr.get(k).select("td");
-	    	//System.out.println(temp);
-	    	//System.out.println("-------------");
+
 	    	if (leagueName.equals(temp.get(6).text())){
-	    		
-	    		/*System.out.println("------------------------------");
-	    		System.out.println(homeTeam(temp.get(2).text()));
-	    		System.out.println(awayTeam(temp.get(2).text()));
-	    		System.out.println(changeDate(temp.get(1).text()));
-	    		System.out.println("------------------------------");*/
 	    		
 	    		String League = temp.get(6).text();
 	    		
@@ -129,16 +129,16 @@ public class ParseSoccerRating{
 				}
 	    		
 	    		
- 			matches.add(new FootballMatch(changeDate(temp.get(1).text()), 
- 											teamAID,
- 											teamBID, 
-     										changeOdd(temp.get(3).text()), 
-     										changeOdd(temp.get(4).text()),
-     										changeOdd(temp.get(5).text()),  
-     										League));	  
+	 			matches.add(new FootballMatch(changeDate(temp.get(1).text()), 
+	 											teamAID,
+	 											teamBID, 
+	     										changeOdd(temp.get(3).text()), 
+	     										changeOdd(temp.get(4).text()),
+	     										changeOdd(temp.get(5).text()),  
+	     										League));	  
  			}
 	    }
-	    addMatchesToDatabase(matches);
+	    return matches;
 	   }
 	
 

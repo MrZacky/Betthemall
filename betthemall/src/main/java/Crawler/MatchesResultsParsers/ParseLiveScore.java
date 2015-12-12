@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,26 +43,26 @@ public class ParseLiveScore {
 		for (int i = 0; i < urls.length; i++) {
 			System.out.println("Parsing..." + urls[i]);
 			logMaker.logInfo("Parsing..." + urls[i]);
-			findMatchesAndAddThemToDatabase(urls[i], leagueShort[i]);
+			findMatchesResultsAndAddThemToDatabase(urls[i], leagueShort[i]);
 		}
 		System.out.println("all urls parsed.");
 		db.closeConnection();
 	}
 	
-	public void findMatchesAndAddThemToDatabase(String url, String leagueShort){
+	public void findMatchesResultsAndAddThemToDatabase(String url, String leagueShort){
 		
 		ArrayList<FootballMatch> matchesResults = null;
 		try {
-			matchesResults = findMatches(url, leagueShort);
+			matchesResults = findMatchesResults(url, leagueShort);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logMaker.logError(e.getMessage());
 		}
-		System.out.println("number of matches found : "+matchesResults.size());
+		System.out.println("Number of matches found : "+matchesResults.size());
 		addMatchesToDatabase(matchesResults);
 	}
 
-	public ArrayList<FootballMatch> findMatches(String url, String leagueShort) throws IOException {
+	public ArrayList<FootballMatch> findMatchesResults(String url, String leagueShort) throws IOException {
 		/* Don't add matches to database with any error */
 		Boolean error = false;
 		

@@ -32,7 +32,7 @@ public class WorkerProcess
     		error = false;
     		
     		/** Parsing results of matches **/	
-    		try {
+    		/*try {
     			System.out.println("Parsing LiveScore started");
     			logMaker.logInfo("Parsing LiveScore started");
     			new ParseLiveScore().init();
@@ -43,7 +43,7 @@ public class WorkerProcess
 				logMaker.logError("During parsing LiveScore exception occurred");
 				e.printStackTrace();
 				error=true;
-			}
+			}*/
     		
 			/** Parsing new matches **/
     		try {
