@@ -44,7 +44,7 @@ public class ParseLiveScore {
 		for (int i = 0; i < urls.length; i++) {
 			System.out.println("Parsing..." + urls[i]);
 			logMaker.logInfo("Parsing..." + urls[i]);
-			findMatches(urls[i], leagueShort[i]);
+			findMatchesAndAddThemToDatabase(urls[i], leagueShort[i]);
 		}
 		System.out.println("all urls parsed.");
 		db.closeConnection();
@@ -59,7 +59,7 @@ public class ParseLiveScore {
 			// TODO Auto-generated catch block
 			logMaker.logError(e.getMessage());
 		}
-		System.out.println("url + "+url+" found matches : "+matchesResults.size());
+		System.out.println("number of matches found : "+matchesResults.size());
 		addMatchesToDatabase(matchesResults);
 	}
 
