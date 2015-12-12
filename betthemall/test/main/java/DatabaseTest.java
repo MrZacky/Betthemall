@@ -13,7 +13,7 @@ import Structure.FootballMatch;
 
 public class DatabaseTest {
 	
-	@Test
+	//@Test
 	public void testNames() throws IOException {
 		
 		DatabaseManager db = new DatabaseManager();
@@ -31,13 +31,13 @@ public class DatabaseTest {
 	}
 	
 	
-	//@Test
+	@Test
 	public void test() throws IOException {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		int TeamAName = 846;
-		int TeamBName = 847;
+		int TeamAName = 1146;
+		int TeamBName = 1049;
 		
 		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,false);
 		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,false);
@@ -104,7 +104,9 @@ public class DatabaseTest {
 		
 		List<FootballMatch> incommingMatches = db.getAllNewIncommingMatches();
 		
-		db.addFinalMatchResultToDatabase(incommingMatches.get(0));
+		if (incommingMatches.size()>0){
+			db.addFinalMatchResultToDatabase(incommingMatches.get(0));
+		}
 		
 		db.closeConnection();
 	}
