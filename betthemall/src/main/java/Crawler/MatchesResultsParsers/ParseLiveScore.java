@@ -150,11 +150,11 @@ public class ParseLiveScore {
 				}
 				
 				if (teamBID == -1){
-					teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, leagueShort);	
+					teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamB, leagueShort);	
 				}
 				
 				if (teamAID == -1 || teamBID == -1){
-					error = false;
+					error = true;
 				}
 				
 				/* Don't add matches to database with any error */

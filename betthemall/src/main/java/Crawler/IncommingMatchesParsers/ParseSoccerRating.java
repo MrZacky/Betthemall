@@ -125,7 +125,7 @@ public class ParseSoccerRating{
 				}
 				
 				if (teamBID == -1){
-					teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, League);	
+					teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamB, League);	
 				}
 	    		
 	    		
