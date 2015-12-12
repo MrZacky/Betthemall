@@ -90,7 +90,6 @@ public class ParseLiveScore {
 				+ "August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])");
 		
 		for (int k = 0; k < table.size(); k++) {
-			// System.out.println();
 			
 			Matcher m = date.matcher(table.get(k).text());
 
@@ -102,10 +101,7 @@ public class ParseLiveScore {
 				// 1. Split by " - ", Example Result : temp = {"FT Aston Villa
 				// 0","0 Manchester City"}
 				temp = (table.get(k).text().split(" - "));
-				/*
-				 * Printing result for (int i=0;i<temp.length;++i){
-				 * System.out.println(i+". "+temp[i]); } }
-				 */
+				
 				// 2. Split by " " first part of temp1, Example Result : temp2 =
 				// {"FT","Aston","Villa","0"}
 				temp2 = temp[0].split(" ");
@@ -116,18 +112,6 @@ public class ParseLiveScore {
 					/* Przypadek np. "?" zamiast liczby*/
 					
 					error = true;
-					
-					//System.out.println(ex.getMessage());
-					//Logger.logMaker.logError(ex.getMessage());
-
-					/*System.out.println("Error scoreA");
-					System.out.println("--------------------");
-					System.out.println(ex.getMessage());
-					System.out.println("--------------------");
-					for (int i = 0; i < temp.length; ++i) {
-						System.out.println(i + ". " + temp[i]);
-					}
-					System.out.println("--------------------");*/
 				}
 
 				teamA = "";
@@ -142,20 +126,9 @@ public class ParseLiveScore {
 				try {
 					scoreB = Integer.parseInt(temp2[0]);
 				} catch (NumberFormatException ex) {
-					/* Przypadek np. "?" zamiast liczby*/
+					/* Przypadek np. "?" zamiast liczby */
 					
 					error = true;
-					//System.out.println(ex.getMessage());
-					//Logger.logMaker.logError(ex.getMessage());
-					
-					/*System.out.println("Error scoreB");
-					System.out.println("--------------------");
-					System.out.println(ex.getMessage());
-					System.out.println("--------------------");
-					for (int i = 0; i < temp.length; ++i) {
-						System.out.println(i + ". " + temp[i]);
-					}
-					System.out.println("--------------------");*/
 				}
 				teamB = "";
 				// TeamA Name - Sum of Strings in temp2 + " " from index = 1 to

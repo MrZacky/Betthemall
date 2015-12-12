@@ -337,7 +337,7 @@ public class DatabaseManager {
 				 * If team A isn't exist in the database, insert team A to the
 				 * database
 				 */
-				sql = "SELECT OriginalTeamID FROM public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + TeamName + "'";// System.out.println(sql);
+				sql = "SELECT \"OriginalTeamID\" FROM public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + TeamName + "'";// System.out.println(sql);
 				rs = stmt.executeQuery(sql);
 				t = rs.next();
 				if (t){
@@ -422,29 +422,15 @@ public class DatabaseManager {
 		try {
 			stmt = connection.createStatement();
 
-			/**
-			 * Check if given Team Name exist in the database. If not, insert
-			 * Team name to the database.
-			 */
-			sql = "SELECT id, \"Name\" FROM public.\"TEAM_NAMES\" WHERE \"Name\" like '" + name + "';";
+			sql = "SELECT nextval('public.\"TEAM_NAMES_SEQ\"')";
 			rs = stmt.executeQuery(sql);
-			t = rs.next();
-			id = Integer.parseInt(rs.getString("id"));
-			if (!t) {
-				sql = "SELECT nextval('public.\"TEAM_NAMES_SEQ\"')";
-				rs = stmt.executeQuery(sql);
-				rs.next();
-				id = Integer.parseInt(rs.getString(rs.getRow()));
-				sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"League\", \"Name\", \"OriginalTeamID\")" + "VALUES (" + id + ", '" + league
-						+ "'" + ", '" + name + "'" + ", '" + id + "');";
-				stmt.executeUpdate(sql);
-				logMaker.logAdd("Add unknown team " + name + " to database");
-
-			}
-			/** Else print message this team name already exist. */
-			/*else if (t) {
-				logMaker.logWarrning("This team is already in database: " + name);
-			}*/
+			rs.next();
+			id = Integer.parseInt(rs.getString(rs.getRow()));
+			sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"League\", \"Name\", \"OriginalTeamID\")" + "VALUES (" + id + ", '" + league
+					+ "'" + ", '" + name + "'" + ", '" + id + "');";
+			stmt.executeUpdate(sql);
+			logMaker.logAdd("Add unknown team " + name + " to database");
+				
 		} catch (SQLException e) {
 			logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
 			logMaker.logError(e.getMessage());
