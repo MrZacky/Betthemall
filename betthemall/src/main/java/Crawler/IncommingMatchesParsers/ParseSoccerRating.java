@@ -100,8 +100,8 @@ public class ParseSoccerRating {
 
 				String League = temp.get(3).text();
 
-				String teamA = homeTeam(temp.get(5).text());
-				String teamB = awayTeam(temp.get(7).text());
+				String teamA = teamFormat(temp.get(5).text());
+				String teamB = teamFormat(temp.get(7).text());
 
 				int teamAID = db.getTeamNamesIDByTeamName(teamA);
 				int teamBID = db.getTeamNamesIDByTeamName(teamB);
@@ -121,20 +121,12 @@ public class ParseSoccerRating {
 		return matches;
 	}
 
-	public String homeTeam(String mecz) {
-		String[] teams = mecz.split(" - ");
-		if (teams[0].endsWith("↑") || teams[0].endsWith("↓"))
-			return teams[0].substring(0, teams[0].length() - 2);
-		return teams[0];
+	public String teamFormat(String mecz) {
+		if (mecz.endsWith("↑") || mecz.endsWith("↓"))
+			return mecz.substring(0, mecz.length() - 2);
+		return mecz;
 	}
-
-	public String awayTeam(String mecz) {
-		String[] teams = mecz.split(" - ");
-		if (teams[1].endsWith("↑") || teams[1].endsWith("↓"))
-			return teams[1].substring(0, teams[1].length() - 2);
-		return teams[1];
-	}
-
+	
 	public double changeOdd(String odd) {
 		return Double.parseDouble(odd);
 	}
