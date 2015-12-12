@@ -337,7 +337,7 @@ public class DatabaseManager {
 				 * If team A isn't exist in the database, insert team A to the
 				 * database
 				 */
-				sql = "SELECT id FROM  public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + TeamName + "'";// System.out.println(sql);
+				sql = "SELECT OriginalTeamID FROM public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + TeamName + "'";// System.out.println(sql);
 				rs = stmt.executeQuery(sql);
 				t = rs.next();
 				if (t){

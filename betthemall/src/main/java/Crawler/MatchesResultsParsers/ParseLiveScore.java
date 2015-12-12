@@ -98,6 +98,7 @@ public class ParseLiveScore {
 				data = table.get(k).text();
 				data = changeDate(data);
 			} else {
+				error = false;
 				// 1. Split by " - ", Example Result : temp = {"FT Aston Villa
 				// 0","0 Manchester City"}
 				temp = (table.get(k).text().split(" - "));
@@ -168,8 +169,16 @@ public class ParseLiveScore {
 				// Testing gained Data
 				// System.out.println("("+data+";"+teamA+";"+teamB+";"+scoreA+";"+scoreB+";"+leagueShort+")");
 				
-				int teamAID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, leagueShort);
-				int teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, leagueShort);
+				int teamAID = db.getTeamNamesIDByTeamName(teamA);
+				int teamBID = db.getTeamNamesIDByTeamName(teamB);
+				
+				if (teamAID == -1){
+					teamAID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, leagueShort);
+				}
+				
+				if (teamBID == -1){
+					teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamA, leagueShort);	
+				}
 				
 				if (teamAID == -1 || teamBID == -1){
 					error = false;
