@@ -30,8 +30,25 @@ public class DatabaseTest {
 		db.closeConnection();
 	}
 	
-	
 	@Test
+	public void testGetIDByNames() throws IOException {
+		
+		DatabaseManager db = new DatabaseManager();
+		db.initConnection();
+		
+		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
+		
+		int TeamAID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1146));
+		int TeamBID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1049));
+		
+		System.out.println("TeamA id : "+TeamAID);
+		System.out.println("TeamB id : "+TeamBID);
+		
+		db.closeConnection();
+	}
+	
+	
+	//@Test
 	public void test() throws IOException {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();

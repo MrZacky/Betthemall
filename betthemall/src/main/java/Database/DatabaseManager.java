@@ -333,15 +333,12 @@ public class DatabaseManager {
 			try {
 				stmt = connection.createStatement();
 
-				/**
-				 * If team A isn't exist in the database, insert team A to the
-				 * database
-				 */
+				//SELECT "OriginalTeamID" FROM public."TEAM_NAMES" WHERE "Name" = 'Arsenal FC';
 				sql = "SELECT \"OriginalTeamID\" FROM public.\"TEAM_NAMES\" WHERE \"Name\" LIKE '" + TeamName + "'";// System.out.println(sql);
 				rs = stmt.executeQuery(sql);
 				t = rs.next();
 				if (t){
-					int id = rs.getInt("id");
+					int id = rs.getInt("OriginalTeamID");
 					return id;
 				}
 			}
