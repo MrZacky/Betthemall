@@ -86,8 +86,10 @@ public class ParseSoccerRating {
 			e.printStackTrace();
 			logMaker.logError(e.getMessage());
 		}
-		/* There are 3 bigtables classes, the third has got new matches */
-		Element table = doc.getElementsByClass("bigtable").get(4);
+		/* There are 6 or 5 bigtables classes, the third has got new matches */
+		Elements tables = doc.getElementsByClass("bigtable");
+		// If exist 6 tables we get 4 index of table, if 5 we get 3
+		Element table = tables.get((tables.size() + 1) % 2 + 3);
 
 		Elements tr = table.select("tr");
 		Elements temp;
@@ -163,11 +165,9 @@ public class ParseSoccerRating {
 	}
 
 	public void addMatchesToDatabase(ArrayList<FootballMatch> matches) {
-		for (int k = 0; k < matches.size(); k++)
-			if (compareDateWithToday(matches.get(k).returnDate())) {
-				addMatchToDatabase(matches.get(k));
-			} else
-				return;
+		for (int k = 0; k < matches.size(); k++){
+			addMatchToDatabase(matches.get(k));
+		}
 	}
 
 	public void addMatchToDatabase(FootballMatch match) {
