@@ -120,7 +120,7 @@ public class ParseSoccerRating {
 					teamBID = db.addUnknownTeamNameToDatabaseAndGetNewTeamID(teamB, League);
 				}
 
-				matches.add(new FootballMatch(temp.get(0).text(), teamAID, teamBID, changeOdd(temp.get(8).text()),
+				matches.add(new FootballMatch(changeDate(temp.get(0).text()), teamAID, teamBID, changeOdd(temp.get(8).text()),
 						changeOdd(temp.get(9).text()), changeOdd(temp.get(10).text()), League));
 			}
 		}
@@ -139,9 +139,7 @@ public class ParseSoccerRating {
 
 	// 19.08.12 ->2012-08-19
 	public String changeDate(String date) {
-		date = date.replace(".", "-");
-		String[] temp = date.split("-");
-		return ("20" + temp[2] + "-" + temp[1] + "-" + temp[0]);
+		return date.replaceAll(" ", "");
 	}
 
 	// 2014-12-28
