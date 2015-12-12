@@ -96,7 +96,7 @@ public class ParseSoccerRating {
 		for (int k = 1; k < tr.size(); k++) {
 			temp = tr.get(k).select("td");
 			
-			if (temp.size() != 10){
+			if (temp.size() != 11){
 				continue;
 			}
 
