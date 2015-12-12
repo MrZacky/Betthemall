@@ -139,7 +139,10 @@ public class ParseSoccerRating {
 
 	// 19.08.12 ->2012-08-19
 	public String changeDate(String date) {
-		return date.replaceAll(" ", "");
+		if (date.endsWith("  ")){
+			return date.substring(0, date.length() - 2);
+		}
+		return date;
 	}
 
 	// 2014-12-28
