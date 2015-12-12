@@ -59,7 +59,7 @@ public class ParseLiveScore {
 			// TODO Auto-generated catch block
 			logMaker.logError(e.getMessage());
 		}
-		
+		System.out.println("url + "+url+" found matches : "+matchesResults.size());
 		addMatchesToDatabase(matchesResults);
 	}
 
@@ -109,9 +109,8 @@ public class ParseLiveScore {
 				try {
 					scoreA = Integer.parseInt(temp2[temp2.length - 1]);
 				} catch (NumberFormatException ex) {
-					/* Przypadek np. "?" zamiast liczby*/
-					
-					error = true;
+					/* Przypadek np. "?" zamiast liczby*/		
+					continue;
 				}
 
 				teamA = "";
@@ -127,8 +126,7 @@ public class ParseLiveScore {
 					scoreB = Integer.parseInt(temp2[0]);
 				} catch (NumberFormatException ex) {
 					/* Przypadek np. "?" zamiast liczby */
-					
-					error = true;
+					continue;
 				}
 				teamB = "";
 				// TeamA Name - Sum of Strings in temp2 + " " from index = 1 to
@@ -154,7 +152,7 @@ public class ParseLiveScore {
 				}
 				
 				if (teamAID == -1 || teamBID == -1){
-					error = true;
+					continue;
 				}
 				
 				/* Don't add matches to database with any error */

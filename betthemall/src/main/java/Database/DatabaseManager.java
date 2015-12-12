@@ -423,8 +423,8 @@ public class DatabaseManager {
 			rs = stmt.executeQuery(sql);
 			rs.next();
 			id = Integer.parseInt(rs.getString(rs.getRow()));
-			sql = "INSERT INTO  public.\"TEAM_NAMES\"( id, \"League\", \"Name\", \"OriginalTeamID\")" + "VALUES (" + id + ", '" + league
-					+ "'" + ", '" + name + "'" + ", '" + id + "');";
+			sql = "INSERT INTO public.\"TEAM_NAMES\"( id, \"League\", \"Name\", \"OriginalTeamID\")" + "VALUES (" + id + ", '" + league
+					+ "'" + ", '" + name + "'" + ", " + id + ");";
 			stmt.executeUpdate(sql);
 			logMaker.logAdd("Add unknown team " + name + " to database");
 				

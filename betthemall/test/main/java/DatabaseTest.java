@@ -38,8 +38,8 @@ public class DatabaseTest {
 		
 		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
 		
-		int TeamAID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1146));
-		int TeamBID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1049));
+		int TeamAID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1577));
+		int TeamBID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1578));
 		
 		System.out.println("TeamA id : "+TeamAID);
 		System.out.println("TeamB id : "+TeamBID);
