@@ -21,8 +21,8 @@ public class DatabaseTest {
 		
 		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
 		
-		String TeamAName = db.getTeamNameByID(1146);
-		String TeamBName = db.getTeamNameByID(1049);
+		String TeamAName = db.getTeamNameByID(1577);
+		String TeamBName = db.getTeamNameByID(1578);
 		
 		System.out.println("TeamA name : "+TeamAName);
 		System.out.println("TeamB name : "+TeamBName);
@@ -30,7 +30,7 @@ public class DatabaseTest {
 		db.closeConnection();
 	}
 	
-	@Test
+	//@Test
 	public void testGetIDByNames() throws IOException {
 		
 		DatabaseManager db = new DatabaseManager();
@@ -48,13 +48,13 @@ public class DatabaseTest {
 	}
 	
 	
-	//@Test
+	@Test
 	public void test() throws IOException {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		int TeamAName = 1146;
-		int TeamBName = 1049;
+		int TeamAName = 1577;
+		int TeamBName = 1578;
 		
 		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,false);
 		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,false);
