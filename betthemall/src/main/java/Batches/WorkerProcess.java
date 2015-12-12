@@ -78,6 +78,7 @@ public class WorkerProcess
     			newData = false;
    		    }*/
    		    
+   		    
    		 	System.out.println("Next RunDate : "+RunDate);
    		 	
     		try {
