@@ -13,7 +13,7 @@ import Structure.FootballMatch;
 
 public class DatabaseTest {
 	
-	//@Test
+	@Test
 	public void testNames() throws IOException {
 		
 		DatabaseManager db = new DatabaseManager();
@@ -21,8 +21,8 @@ public class DatabaseTest {
 		
 		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
 		
-		String TeamAName = db.getTeamNameByID(642);
-		String TeamBName = db.getTeamNameByID(655);
+		String TeamAName = db.getTeamNameByID(1146);
+		String TeamBName = db.getTeamNameByID(1049);
 		
 		System.out.println("TeamA name : "+TeamAName);
 		System.out.println("TeamB name : "+TeamBName);
@@ -31,7 +31,7 @@ public class DatabaseTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void test() throws IOException {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();

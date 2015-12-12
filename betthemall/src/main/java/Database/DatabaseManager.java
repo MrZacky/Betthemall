@@ -103,7 +103,7 @@ public class DatabaseManager {
 		try {
 			stmt = connection.createStatement();
 			/** Select all matches results of teamA againts teamB **/
-			sql = "SELECT \"Name\" FROM public.\"TEAM_NAMES\"" + "WHERE OriginalTeamID = '" + TeamID + "'";
+			sql = "SELECT \"Name\" FROM public.\"TEAM_NAMES\" WHERE \"OriginalTeamID\" = '" + TeamID + "'";
 
 			rs = stmt.executeQuery(sql);
 
