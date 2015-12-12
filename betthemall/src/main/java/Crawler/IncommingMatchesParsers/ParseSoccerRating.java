@@ -95,6 +95,10 @@ public class ParseSoccerRating {
 		matches = new ArrayList<FootballMatch>();
 		for (int k = 1; k < tr.size(); k++) {
 			temp = tr.get(k).select("td");
+			
+			if (temp.size() != 10){
+				continue;
+			}
 
 			if (leagueName.equals(temp.get(3).text())) {
 
