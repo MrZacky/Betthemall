@@ -13,7 +13,7 @@ import Structure.FootballMatch;
 
 public class DatabaseTest {
 	
-	//@Test
+	@Test
 	public void testNames() throws IOException {
 		
 		DatabaseManager db = new DatabaseManager();
@@ -48,7 +48,7 @@ public class DatabaseTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void test() throws IOException {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
