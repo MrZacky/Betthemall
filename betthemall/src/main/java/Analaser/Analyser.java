@@ -38,7 +38,7 @@ public class Analyser {
 			iterations = matches.size();
 		}
 
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < iterations; i++) {
 			FootballMatch calculatedMatch = CalculateMatchResults(matches.get(i));
 		}
 	}
@@ -57,7 +57,7 @@ public class Analyser {
 		int TeamAID = currentMatch.returnTeamA();
 		int TeamBID = currentMatch.returnTeamB();
 
-		System.out.println(TeamAID + " agants " + TeamBID);
+		System.out.println("Match date : "+currentMatch.returnDate()+" "+db.getTeamNameByID(TeamAID) + " againts " + db.getTeamNameByID(TeamBID));
 
 		// 2. Wyzerowanie współczynnika skuteczności drużyny A i B.
 		double efficiencyA = 0.0;
@@ -218,14 +218,14 @@ public class Analyser {
 		// 7. Wyliczanie potencjalnej wygranej, remisu lub przegranej Teamu A
 		// przeciwko Teamu B
 
-		// efficiency should be >= 0, but in my case some proparties can
+		// efficiency should be > 0, but in my case some proparties can
 		// decrease efficiency,
 		// so we have to add max(abs(efficiencyA),abs(efficiencyB)) to
 		// efficiencyA and efficiencyB
 		if (efficiencyA < 0 || efficiencyB < 0) {
 			double maxEfficinecyAB = Math.max(Math.abs(efficiencyA), Math.abs(efficiencyB));
-			efficiencyA += maxEfficinecyAB;
-			efficiencyB += maxEfficinecyAB;
+			efficiencyA += maxEfficinecyAB+1;
+			efficiencyB += maxEfficinecyAB+1;
 		}
 
 		double winA = 0;
@@ -243,16 +243,21 @@ public class Analyser {
 		double drawEfficiency = (efficiencyA + efficiencyDifference + efficiencyB + 1)
 				/ (efficiencyA + efficiencyB + 1);
 
-		double sum = efficiencyA + drawEfficiency + efficiencyB;
+		double sum1 = efficiencyA  + efficiencyB;
 
+		efficiencyA/=sum1;
+		efficiencyB/=sum1;
+		
+		double sum = efficiencyA + drawEfficiency + efficiencyB;
+		
 		winA = efficiencyA / sum * 100;
 		draw = drawEfficiency / sum * 100;
 		winB = efficiencyB / sum * 100;
 		
 		
-		winA = new BigDecimal(winA).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		draw = new BigDecimal(draw).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		winB = new BigDecimal(winB).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		//winA = new BigDecimal(winA).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		//draw = new BigDecimal(draw).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		//winB = new BigDecimal(winB).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		//winA = Double.
 
 		System.out.println("efficiencyA = " + efficiencyA);

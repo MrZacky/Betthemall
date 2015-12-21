@@ -64,7 +64,7 @@ public class ParseLiveScore {
 
 	public ArrayList<FootballMatch> findMatchesResults(String url, String leagueShort) throws IOException {
 		/* Don't add matches to database with any error */
-		Boolean error = false;
+		boolean error = false;
 		
 		Document doc = Jsoup.connect(url).get();
 		
@@ -79,7 +79,7 @@ public class ParseLiveScore {
 		// "row-tall bt0" - {Month DayOfMonth}
 		Elements table = doc.getElementsByAttributeValueMatching("class", "row-gray|row-tall bt0");
 
-		/* Example found data "FT Aston Villa 0 - 0 Manchester City" */
+		/* Example found data "September 9" or "FT Aston Villa 0 - 0 Manchester City" */
 		String temp[], temp2[];
 		String data = "";
 		String teamA = "", teamB = "";
@@ -88,9 +88,11 @@ public class ParseLiveScore {
 		Pattern date = Pattern.compile("(January|February|March|April|May|June|July|"
 				+ "August|September|October|November|December)\\s([1-9]|[1-2][0-9]|3[0-1])");
 		
+		Matcher m;
+		
 		for (int k = 0; k < table.size(); k++) {
 			
-			Matcher m = date.matcher(table.get(k).text());
+			m = date.matcher(table.get(k).text());
 
 			if (m.matches()) {
 				data = table.get(k).text();

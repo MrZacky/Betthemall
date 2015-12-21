@@ -9,7 +9,7 @@ public class AnalyserTest {
 	public void test() throws IOException{
 		Analyser analyser = new Analyser();
 		
-		int k = 1;
+		int k = 10;
 		analyser.init(k);
 		//System.out.println(parser.changeDate("Sunday 28 December 2014"));
 		
