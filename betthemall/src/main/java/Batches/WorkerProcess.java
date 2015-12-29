@@ -28,11 +28,11 @@ public class WorkerProcess
     	
     	Boolean error;
     	while(true){
-    		System.out.println("Starting a process...");
+    		/*System.out.println("Starting a process...");
     		error = false;
     		
     		/** Parsing results of matches **/	
-    		try {
+    		/*try {
     			System.out.println("Parsing LiveScore started");
     			logMaker.logInfo("Parsing LiveScore started");
     			new ParseLiveScore().init();
@@ -46,7 +46,7 @@ public class WorkerProcess
 			}
     		
 			/** Parsing new matches **/
-    		try {
+    		/*try {
     			System.out.println("Parsing SoccerRating started");
     			logMaker.logInfo("Parsing SoccerRating started");
     			new ParseSoccerRating().init();	
@@ -65,20 +65,21 @@ public class WorkerProcess
    		 	else{
    		 		System.out.println("Parsing Process completed, but errors occurred");
    		 		logMaker.logInfo("Parsing Process completed, but errors occurred");
-   		 	}
-   		    int style = DateFormat.FULL;
-   		 	Date RunDate = new Date();
-   		    DateFormat df = DateFormat.getDateInstance(style, new Locale("pl", "PL"));
-   		 	RunDate.setTime(RunDate.getTime()+time);
-   		    df.format(RunDate);
-  
-
+   		 	}*/
+   		 	
    		    if (newData){
    		    	System.out.println("Analyser started");
     			new Analyser().init(true);
     			newData = false;
    		    	System.out.println("Analyser completed successfully");
    		    }
+   		 	
+   		 	
+   		    int style = DateFormat.FULL;
+   		 	Date RunDate = new Date();
+   		    DateFormat df = DateFormat.getDateInstance(style, new Locale("pl", "PL"));
+   		 	RunDate.setTime(RunDate.getTime()+time);
+   		    df.format(RunDate);
    		    
    		    
    		 	System.out.println("Next RunDate : "+RunDate);
