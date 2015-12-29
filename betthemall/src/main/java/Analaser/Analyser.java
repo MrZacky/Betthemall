@@ -27,6 +27,14 @@ public class Analyser {
 
 		db.closeConnection();
 	}
+	
+	public void init(String dateFrom, String dateTo, boolean addToDatabase) throws IOException {
+		db.initConnection();
+
+		CalculateMatchesResultsByPeriod(dateFrom, dateTo, addToDatabase);
+
+		db.closeConnection();
+	}
 
 	public void CalculateMatchesResultsForKMatches(int k, boolean addToDatabase) {
 		// Pobranie wszystkich nie policzonych meczy
@@ -39,6 +47,17 @@ public class Analyser {
 		}
 
 		for (int i = 0; i < iterations; i++) {
+			FootballMatch calculatedMatch = CalculateMatchResults(matches.get(i));
+			if (addToDatabase){
+				db.addFinalMatchResultToDatabase(calculatedMatch);
+			}
+		}
+	}
+	
+	private void CalculateMatchesResultsByPeriod(String dateFrom, String dateTo, boolean addToDatabase) {
+		// Pobranie wszystkich nie policzonych meczy
+		List<FootballMatch> matches = db.getAllNewIncommingMatchesByPeriod(dateFrom, dateTo);
+		for (int i = 0; i < matches.size(); i++) {
 			FootballMatch calculatedMatch = CalculateMatchResults(matches.get(i));
 			if (addToDatabase){
 				db.addFinalMatchResultToDatabase(calculatedMatch);
@@ -60,10 +79,10 @@ public class Analyser {
 	// 1. Pobranie zbliżającego się meczu (drużyna A przeciw drużynie B)
 	public FootballMatch CalculateMatchResults(FootballMatch currentMatch) {
 
-		int TeamAID = currentMatch.returnTeamA();
-		int TeamBID = currentMatch.returnTeamB();
+		int TeamAID = db.getOriginalTeamIDByID(currentMatch.returnTeamA());
+		int TeamBID = db.getOriginalTeamIDByID(currentMatch.returnTeamB());
 
-		System.out.println("Match date : "+currentMatch.returnDate()+" "+db.getTeamNameByID(TeamAID) + " againts " + db.getTeamNameByID(TeamBID));
+		System.out.println("Match date : "+currentMatch.returnDate()+" "+db.getTeamNameByID(TeamAID) + " vs " + db.getTeamNameByID(TeamBID));
 
 		// 2. Wyzerowanie współczynnika skuteczności drużyny A i B.
 		double efficiencyA = 0.0;
@@ -79,9 +98,9 @@ public class Analyser {
 		// Rozegrane mecze Teamu B w domu bez meczów z Teamem A
 		List<FootballMatch> TeamBInHomeWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, 2);
 		// Rozegrane mecze Teamu A na wyjeździe bez meczów z Teamem B
-		List<FootballMatch> TeamAAsGuestWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, 3);
+		List<FootballMatch> TeamAAsGuestWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, 3);
 		// Rozegrane mecze Teamu B na wyjeździe bez meczów z Teamem A
-		List<FootballMatch> TeamBAsGuestWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamAID, TeamBID, 3);
+		List<FootballMatch> TeamBAsGuestWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBID, TeamAID, 3);
 
 		// Korekcje
 		/*
@@ -94,10 +113,10 @@ public class Analyser {
 		// meczów między sobą (czy były wygrane, czy przegrane i z jaką
 		// przewagą)
 		// Umożliwienie konfiguralności
-		double pointsForWin = 4;
-		double pointsForDraw = 0;
-		double pointsForLose = -4;
-		double pointsForGoal = 1;
+		double pointsForWin = 3;
+		double pointsForDraw = 1.5;
+		double pointsForLose = -3;
+		double pointsForGoal = 0.5;
 
 		double winAsHomeA = 0;
 		double loseAsHomeA = 0;
@@ -317,12 +336,13 @@ public class Analyser {
 		//efficiencyA/=sum1;
 		//efficiencyB/=sum1;
 		
-		efficiencyDifference /= drawEfficiency;
 		double sum = efficiencyA + efficiencyDifference + efficiencyB;
+		efficiencyDifference = sum / Math.pow(drawEfficiency, 2);
+		double sum2 = efficiencyA + efficiencyDifference + efficiencyB;
 		
-		winA = efficiencyA / sum * 100;
-		draw = efficiencyDifference / sum * 100;
-		winB = efficiencyB / sum * 100;
+		winA = efficiencyA / sum2 * 100;
+		draw = efficiencyDifference / sum2 * 100;
+		winB = efficiencyB / sum2 * 100;
 		
 		
 		//winA = new BigDecimal(winA).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();

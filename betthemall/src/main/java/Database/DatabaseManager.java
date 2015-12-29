@@ -87,6 +87,37 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param TeamID
+	 * @return TeamName - if TeamID exist return name of team for that ID, else
+	 *         return "Name not found";
+	 */
+	public int getOriginalTeamIDByID(int TeamID) {
+		ResultSet rs = null;
+		Statement stmt = null;
+		String sql = null;
+		int originalTeamID = -1;
+		boolean t;
+		try {
+			stmt = connection.createStatement();
+			/** Select all matches results of teamA againts teamB **/
+			sql = "SELECT \"OriginalTeamID\" FROM public.\"TEAM_NAMES\" WHERE \"id\" = '" + TeamID + "'";
+
+			rs = stmt.executeQuery(sql);
+
+			t = rs.next();
+			if (t) {
+				originalTeamID = rs.getInt("OriginalTeamID");
+			}
+		} catch (SQLException e) {
+			logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
+			logMaker.logError(e.getMessage());
+			// e.printStackTrace();
+		}
+		return originalTeamID;
+	}
 
 	/**
 	 * 
@@ -120,6 +151,7 @@ public class DatabaseManager {
 		}
 		return TeamName;
 	}
+	
 	public List<FootballMatch> getAllNewIncommingMatchesByPeriod(String dateFrom, String dateTo) {
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -174,7 +206,7 @@ public class DatabaseManager {
 
 			sql = "SELECT  id ,\"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"WinA\",\"Draw\", \"WinB\", "
 					+ "\"League\", \"Page\" FROM public.\"FOOTBALL_MATCHES\""
-					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1 ORDER BY \"MatchDate\" ASC";
+					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1 ORDER BY \"MatchDate\" DESC";
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -222,7 +254,7 @@ public class DatabaseManager {
 				/** Select all matches results of teamA againts teamB **/
 				sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
 						+ "\"League\" FROM public.\"MATCHES_RESULTS\"" + "WHERE \"TeamA_ID\" = '" + teamAID
-						+ "' and \"TeamB_ID\" = '" + teamBID + "' ORDER BY \"MatchDate\" ASC;";
+						+ "' and \"TeamB_ID\" = '" + teamBID + "' ORDER BY \"MatchDate\" DESC;";
 			} else if (Option == 2) {
 				/**
 				 * Select all matches results of teamA without matches with
@@ -230,7 +262,7 @@ public class DatabaseManager {
 				 **/
 				sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
 						+ "\"League\" FROM public.\"MATCHES_RESULTS\"" + "WHERE \"TeamA_ID\" = '" + teamAID
-						+ "' and \"TeamB_ID\" != '" + teamBID + "' ORDER BY \"MatchDate\" ASC;";
+						+ "' and \"TeamB_ID\" != '" + teamBID + "' ORDER BY \"MatchDate\" DESC;";
 			}
 			else if (Option == 3){
 				/**
@@ -239,7 +271,7 @@ public class DatabaseManager {
 				 **/
 				sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
 						+ "\"League\" FROM public.\"MATCHES_RESULTS\"" + "WHERE \"TeamB_ID\" = '" + teamAID
-						+ "' and \"TeamA_ID\" != '" + teamBID + "' ORDER BY \"MatchDate\" ASC;";	
+						+ "' and \"TeamA_ID\" != '" + teamBID + "' ORDER BY \"MatchDate\" DESC;";	
 			}
 			else{
 				return new ArrayList();

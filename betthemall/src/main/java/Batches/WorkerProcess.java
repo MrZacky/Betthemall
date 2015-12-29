@@ -72,11 +72,13 @@ public class WorkerProcess
    		 	RunDate.setTime(RunDate.getTime()+time);
    		    df.format(RunDate);
   
-   		    // Analyser switched off on Test time
-   		    /*if (newData){
-    			new Analyser().init();
+
+   		    if (newData){
+   		    	System.out.println("Analyser started");
+    			new Analyser().init(true);
     			newData = false;
-   		    }*/
+   		    	System.out.println("Analyser completed successfully");
+   		    }
    		    
    		    
    		 	System.out.println("Next RunDate : "+RunDate);

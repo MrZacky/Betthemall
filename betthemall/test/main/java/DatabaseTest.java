@@ -19,7 +19,6 @@ public class DatabaseTest {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
 		
 		String TeamAName = db.getTeamNameByID(1577);
 		String TeamBName = db.getTeamNameByID(1578);
@@ -36,10 +35,8 @@ public class DatabaseTest {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		//TODO Naprawić Id dla incomming matches bo coś nie mają nazw drużyny
-		
-		int TeamAID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1577));
-		int TeamBID = db.getTeamNamesIDByTeamName(db.getTeamNameByID(1578));
+		int TeamAID = db.getTeamNamesIDByTeamName("Liverpool");
+		int TeamBID = db.getTeamNamesIDByTeamName("Leicester City");
 		
 		System.out.println("TeamA id : "+TeamAID);
 		System.out.println("TeamB id : "+TeamBID);
@@ -48,19 +45,41 @@ public class DatabaseTest {
 	}
 	
 	
-	//@Test
+	@Test
 	public void test() throws IOException {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		int TeamAName = 1577;
-		int TeamBName = 1578;
+		int TeamAName = 1693;
+		int TeamBName = 1591;
 		
-		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,1);
-		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,1);
-		List<FootballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,2);
-		List<FootballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,2);
+		//int TeamAName = 1591;
+		//int TeamBName = 1583;
 		
+		String TeamAName2 = db.getTeamNameByID(1693);
+		String TeamBName2 = db.getTeamNameByID(1591);
+		
+		System.out.println("TeamA name : "+TeamAName2);
+		System.out.println("TeamB name : "+TeamBName2);
+		
+		List<FootballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,1);
+		List<FootballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,1);
+		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,2);
+		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,2);
+		List<FootballMatch> TeamAAsGuestWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName, TeamBName, 3);
+		List<FootballMatch> TeamBAsGuestWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName, TeamAName, 3);
+		
+		System.out.println("TeamAAndTeamBMatchesResults : ");
+		
+		for (int i=0;i<TeamAAndTeamBMatchesResults.size();i++){
+			System.out.println(TeamAAndTeamBMatchesResults.get(i).returnMatchResult());
+		}
+		
+		System.out.println("TeamBAndTeamAMatchesResults : ");
+		
+		for (int i=0;i<TeamBAndTeamAMatchesResults.size();i++){
+			System.out.println(TeamBAndTeamAMatchesResults.get(i).returnMatchResult());
+		}
 		
 		System.out.println("TeamAWitoutTeamBMatchesResults : ");
 		
@@ -74,17 +93,19 @@ public class DatabaseTest {
 			System.out.println(TeamBWithoutTeamAMatchesResults.get(i).returnMatchResult());
 		}
 		
-		System.out.println("TeamAAndTeamBMatchesResults : ");
+		System.out.println("TeamAAsGuestWitoutTeamBMatchesResults : ");
 		
-		for (int i=0;i<TeamAAndTeamBMatchesResults.size();i++){
-			System.out.println(TeamAAndTeamBMatchesResults.get(i).returnMatchResult());
+		for (int i=0;i<TeamAAsGuestWitoutTeamBMatchesResults.size();i++){
+			System.out.println(TeamAAsGuestWitoutTeamBMatchesResults.get(i).returnMatchResult());
 		}
 		
-		System.out.println("TeamBAndTeamAMatchesResults : ");
+		System.out.println("TeamBAsGuestWithoutTeamAMatchesResults : ");
 		
-		for (int i=0;i<TeamBAndTeamAMatchesResults.size();i++){
-			System.out.println(TeamBAndTeamAMatchesResults.get(i).returnMatchResult());
+		for (int i=0;i<TeamBAsGuestWithoutTeamAMatchesResults.size();i++){
+			System.out.println(TeamBAsGuestWithoutTeamAMatchesResults.get(i).returnMatchResult());
 		}
+		
+		
 		
 		
 		db.closeConnection();
@@ -128,12 +149,12 @@ public class DatabaseTest {
 		db.closeConnection();
 	}
 	
-	@Test
+	//@Test
 	public void test4() throws IOException {
 		DatabaseManager db = new DatabaseManager();
 		db.initConnection();
 		
-		List<FootballMatch> incommingMatches = db.getAllNewIncommingMatchesByPeriod("2015-12-26", "2015-12-30");
+		List<FootballMatch> incommingMatches = db.getAllNewIncommingMatchesByPeriod("2015-12-29", "2015-12-29");
 		
 		System.out.println("incommingMatches List Size : "+incommingMatches.size());
 		
