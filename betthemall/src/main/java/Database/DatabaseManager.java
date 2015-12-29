@@ -206,7 +206,7 @@ public class DatabaseManager {
 
 			sql = "SELECT  id ,\"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"WinA\",\"Draw\", \"WinB\", "
 					+ "\"League\", \"Page\" FROM public.\"FOOTBALL_MATCHES\""
-					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1 ORDER BY \"MatchDate\" DESC";
+					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1 ORDER BY \"MatchDate\" ASC";
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {

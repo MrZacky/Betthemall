@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.gargoylesoftware.htmlunit.WebConsole.Logger;
+
 import Database.DatabaseManager;
 import Logger.LogMaker;
 import Structure.FootballMatch;
@@ -82,7 +84,7 @@ public class Analyser {
 		int TeamAID = db.getOriginalTeamIDByID(currentMatch.returnTeamA());
 		int TeamBID = db.getOriginalTeamIDByID(currentMatch.returnTeamB());
 
-		System.out.println("Match date : "+currentMatch.returnDate()+" "+db.getTeamNameByID(TeamAID) + " vs " + db.getTeamNameByID(TeamBID));
+		System.out.println("Analysing... Match date : "+currentMatch.returnDate()+" "+db.getTeamNameByID(TeamAID) + " vs " + db.getTeamNameByID(TeamBID));
 
 		// 2. Wyzerowanie współczynnika skuteczności drużyny A i B.
 		double efficiencyA = 0.0;
@@ -350,15 +352,15 @@ public class Analyser {
 		//winB = new BigDecimal(winB).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		//winA = Double.
 
-		System.out.println("efficiencyA = " + efficiencyA);
+		/*System.out.println("efficiencyA = " + efficiencyA);
 		System.out.println("efficiencyB = " + efficiencyB);
 		System.out.println("efficiencyDifference = " + efficiencyDifference);
 		System.out.println("winA = " + winA + "%");
 		System.out.println("draw = " + draw + "%");
-		System.out.println("winB = " + winB + "%");
+		System.out.println("winB = " + winB + "%");*/
 
-		FootballMatch calculatedMatch = new FootballMatch(currentMatch.returnDate(), TeamAID , TeamBID,
-											efficiencyA, efficiencyDifference, efficiencyB, currentMatch.returnLeague()); 
+		FootballMatch calculatedMatch = new FootballMatch(currentMatch.returnID(),currentMatch.returnDate(), TeamAID , TeamBID,
+				winA, draw, winB, currentMatch.returnLeague()); 
 		return calculatedMatch;
 	}
 

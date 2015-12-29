@@ -9,9 +9,9 @@ public class AnalyserTest {
 	public void KMatchesAnalyseWithoutAddingToDatabase() throws IOException{
 		Analyser analyser = new Analyser();
 		
-		String dateFrom = "2015-12-26";
+		String dateFrom = "2015-12-20";
 		String dateTo = "2015-12-26";
-		analyser.init(dateFrom,dateTo,false);
+		analyser.init(dateFrom,dateTo,true);
 		
 	}
 	
