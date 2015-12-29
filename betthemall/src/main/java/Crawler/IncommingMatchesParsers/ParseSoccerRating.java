@@ -89,10 +89,13 @@ public class ParseSoccerRating {
 		/* There are 6 or 5 bigtables classes, the third has got new matches */
 		Elements tables = doc.getElementsByClass("bigtable");
 		// If exist 6 tables we get 4 index of table, if 5 we get 3
-		if (!(tables.size() == 5 || tables.size() == 6)){
+		Element table;
+		try{
+			table = tables.get((tables.size() + 1) % 2 + 3);
+		}
+		catch(Exception e){
 			return new ArrayList();
 		}
-		Element table = tables.get((tables.size() + 1) % 2 + 3);
 
 		Elements tr = table.select("tr");
 		Elements temp;
