@@ -67,12 +67,12 @@ public class WorkerProcess
    		 		logMaker.logInfo("Parsing Process completed, but errors occurred");
    		 	}*/
    		 	
-   		    if (newData){
+   		   // if (newData){
    		    	System.out.println("Analyser started");
     			new Analyser().init(true);
     			newData = false;
    		    	System.out.println("Analyser completed successfully");
-   		    }
+   		   // }
    		 	
    		 	
    		    int style = DateFormat.FULL;
