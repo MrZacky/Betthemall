@@ -17,6 +17,8 @@ import com.jcraft.jsch.Session;
 
 public class LogMaker {
 	
+	private static boolean logMakerOn = false;
+	
 	private static LogMaker instance = null;
 	
 	private static File file = null;
@@ -32,22 +34,24 @@ public class LogMaker {
 	private static ChannelSftp channelSftp = null;
 	
 	public LogMaker (){
-		try {
-			JSch jsch = new JSch();
-			session = jsch.getSession(SFTPUSER, SFTPHOST, SFTPPORT);
-			session.setPassword(SFTPPASS);
-			java.util.Properties config = new java.util.Properties();
-			config.put("StrictHostKeyChecking", "no");
-			session.setConfig(config);
-			session.connect();
-			channel = session.openChannel("sftp");
-			channel.connect();
-			channelSftp = (ChannelSftp) channel;
-			channelSftp.cd(SFTPWORKINGDIR);
-			//File f = new File("test.txt");
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (logMakerOn){
+			try {
+				JSch jsch = new JSch();
+				session = jsch.getSession(SFTPUSER, SFTPHOST, SFTPPORT);
+				session.setPassword(SFTPPASS);
+				java.util.Properties config = new java.util.Properties();
+				config.put("StrictHostKeyChecking", "no");
+				session.setConfig(config);
+				session.connect();
+				channel = session.openChannel("sftp");
+				channel.connect();
+				channelSftp = (ChannelSftp) channel;
+				channelSftp.cd(SFTPWORKINGDIR);
+				//File f = new File("test.txt");
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 	
@@ -60,39 +64,44 @@ public class LogMaker {
 
     private void logAdder(String msg)
     {	
-    	try{
-    		
-		    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm_ss.S");
-		    //get current date time with Calendar()
-		    Calendar cal = Calendar.getInstance();
-		    
-    		if (((file==null) || ((file!=null) && (!file.exists())))){
-    			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
-    			file = new File(newNameOfFile);
-    			file.createNewFile();
-    		}
-    		else{
-    			long fileSizeInMB = file.length() / 1024 / 1024;
-    			if (fileSizeInMB >= 10){
-    				String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
-    				file = new File(newNameOfFile);
-    				file.createNewFile();
-    			}
-    		}
-    		
-    	    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
-    	    out.println(msg);
-    	    out.close();
-    	    
-    	}catch(IOException e){
-    		e.printStackTrace();
-    	}
-    	
-		try {
-			channelSftp.put(new FileInputStream(file), file.getName());
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (logMakerOn){
+	    	try{
+	    		
+			    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm_ss.S");
+			    //get current date time with Calendar()
+			    Calendar cal = Calendar.getInstance();
+			    
+	    		if (((file==null) || ((file!=null) && (!file.exists())))){
+	    			String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
+	    			file = new File(newNameOfFile);
+	    			file.createNewFile();
+	    		}
+	    		else{
+	    			long fileSizeInMB = file.length() / 1024 / 1024;
+	    			if (fileSizeInMB >= 10){
+	    				String newNameOfFile = "logs/"+dateFormat.format(cal.getTime()).toString()+"_betthemall_log.txt";
+	    				file = new File(newNameOfFile);
+	    				file.createNewFile();
+	    			}
+	    		}
+	    		
+	    	    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
+	    	    out.println(msg);
+	    	    out.close();
+	    	    
+	    	}catch(IOException e){
+	    		e.printStackTrace();
+	    	}
+	    	
+			try {
+				channelSftp.put(new FileInputStream(file), file.getName());
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		else{
+			//System.out.println(msg);
 		}
     }
 
