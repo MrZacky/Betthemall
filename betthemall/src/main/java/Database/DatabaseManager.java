@@ -120,6 +120,44 @@ public class DatabaseManager {
 		}
 		return TeamName;
 	}
+	public List<FootballMatch> getAllNewIncommingMatchesByPeriod(String dateFrom, String dateTo) {
+		ResultSet rs = null;
+		Statement stmt = null;
+		String sql = null;
+		List<FootballMatch> matchesList = new ArrayList();
+
+		try {
+			stmt = connection.createStatement();
+
+			sql = "SELECT  id ,\"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"WinA\",\"Draw\", \"WinB\", "
+					+ "\"League\", \"Page\" FROM public.\"FOOTBALL_MATCHES\""
+					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1 AND \"MatchDate\">= '" + dateFrom + "' AND \"MatchDate\"<= '" + dateTo + "' ORDER BY \"MatchDate\" ASC";
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				// public footballMatch(String ID, String data, String teamA,
+				// String teamB, double winA, double draw, double winB, String
+				// league)
+				String MatchID = rs.getString("ID");
+				int TeamA = rs.getInt("TeamA_ID");
+				int TeamB = rs.getInt("TeamB_ID");
+				String MatchDate = rs.getString("MatchDate");
+				double WinA = rs.getDouble("WinA");
+				double Draw = rs.getDouble("Draw");
+				double WinB = rs.getDouble("WinB");
+				String League = rs.getString("League");
+				FootballMatch match = new FootballMatch(MatchID, MatchDate, TeamA, TeamB, WinA, Draw, WinB, League);
+				matchesList.add(match);
+			}
+		} catch (SQLException e) {
+			logMaker.logError("SQL expression is wrong. <<class.addUnknownTeamToDatabse>>");
+			logMaker.logError(e.getMessage());
+			// e.printStackTrace();
+		}
+		return matchesList;
+	}
+	
+	
 	/**
 	 * 
 	 * 
@@ -136,7 +174,7 @@ public class DatabaseManager {
 
 			sql = "SELECT  id ,\"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"WinA\",\"Draw\", \"WinB\", "
 					+ "\"League\", \"Page\" FROM public.\"FOOTBALL_MATCHES\""
-					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1";
+					+ "WHERE \"FINAL_FOOTBALL_MATCH_ID\" = -1 ORDER BY \"MatchDate\" ASC";
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -162,9 +200,14 @@ public class DatabaseManager {
 		return matchesList;
 	}
 
-	/** Get all matches results from database of teamA **/
-	public List<FootballMatch> getMatchesResultsFromDatabase(int teamAID,int teamBID,
-			boolean MatchesOnlyAgaintsTeamB) {
+	/** Get all matches results from database of teamA 
+		In : {int teamAID,int teamBID, int Option}
+		Option : {1 - All matches TeamA vs TeamB
+				  2 - All matches TeamA vs (EveryTeam/TeamB)
+				  3 - All matches (EveryTeam/TeamB) vs TeamA}
+	**/
+	public List<FootballMatch> getMatchesResultsFromDatabase(int teamAID, int teamBID,
+			int Option) {
 		ResultSet rs = null;
 		Statement stmt = null;
 		String sql = null;
@@ -175,19 +218,31 @@ public class DatabaseManager {
 		try {
 			stmt = connection.createStatement();
 
-			if (MatchesOnlyAgaintsTeamB) {
+			if (Option == 1) {
 				/** Select all matches results of teamA againts teamB **/
 				sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
 						+ "\"League\" FROM public.\"MATCHES_RESULTS\"" + "WHERE \"TeamA_ID\" = '" + teamAID
-						+ "' and \"TeamB_ID\" = '" + teamBID + "';";
-			} else {
+						+ "' and \"TeamB_ID\" = '" + teamBID + "' ORDER BY \"MatchDate\" ASC;";
+			} else if (Option == 2) {
 				/**
-				 * Select all matches results of teamA also without matches with
+				 * Select all matches results of teamA without matches with
 				 * teamB
 				 **/
 				sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
 						+ "\"League\" FROM public.\"MATCHES_RESULTS\"" + "WHERE \"TeamA_ID\" = '" + teamAID
-						+ "' and \"TeamB_ID\" != '" + teamBID + "';";
+						+ "' and \"TeamB_ID\" != '" + teamBID + "' ORDER BY \"MatchDate\" ASC;";
+			}
+			else if (Option == 3){
+				/**
+				 * Select all matches results of teamA as teamB without matches with
+				 * teamB
+				 **/
+				sql = "SELECT \"TeamA_ID\", \"TeamB_ID\", \"MatchDate\", \"TeamA_Score\",\"TeamB_Score\", "
+						+ "\"League\" FROM public.\"MATCHES_RESULTS\"" + "WHERE \"TeamB_ID\" = '" + teamAID
+						+ "' and \"TeamA_ID\" != '" + teamBID + "' ORDER BY \"MatchDate\" ASC;";	
+			}
+			else{
+				return new ArrayList();
 			}
 
 			rs = stmt.executeQuery(sql);
@@ -282,7 +337,7 @@ public class DatabaseManager {
 			try {
 				stmt = connection.createStatement();
 
-				System.out.println("New ID Selected");
+				logMaker.logInfo("New ID Selected");
 
 				sql = "SELECT nextval('public.\"FINAL_FOOTBALL_MATCHES_SEQ\"');";
 				rs = stmt.executeQuery(sql);
@@ -292,7 +347,7 @@ public class DatabaseManager {
 				String TeamAName = getTeamNameByID(finalMatch.returnTeamA());
 				String TeamBName = getTeamNameByID(finalMatch.returnTeamB());
 
-				System.out.println("Team Names Selected");
+				logMaker.logInfo("Team Names Selected");
 
 				sql = "INSERT INTO  public.\"FINAL_FOOTBALL_MATCHES\" ( id ,\"TeamA_Name\", \"TeamB_Name\", \"MatchDate\", \"WinA\", \"Draw\", \"WinB\",\"League\")"
 						+ "VALUES (" + id + ", '" + TeamAName + "', '" + TeamBName + "', '" + finalMatch.returnDate()
@@ -301,13 +356,13 @@ public class DatabaseManager {
 				stmt.executeUpdate(sql);
 				addFinalMatches = addFinalMatches + 1;
 
-				System.out.println("FINAL_FOOTBAL_MATCH WITH ID " + id + " ADDED");
+				logMaker.logAdd("FINAL_FOOTBAL_MATCH WITH ID " + id + " ADDED");
 
 				sql = "UPDATE public.\"FOOTBALL_MATCHES\"" + "SET \"FINAL_FOOTBALL_MATCH_ID\" = '" + id + "'"
 						+ "WHERE \"id\" = '" + finalMatch.returnID() + "';";
 				stmt.executeUpdate(sql);
 
-				System.out.println("FOOTBALL_MATCH WITH ID " + finalMatch.returnID() + " UPDATED");
+				logMaker.logAdd("FOOTBALL_MATCH WITH ID " + finalMatch.returnID() + " UPDATED");
 
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());

@@ -13,7 +13,7 @@ import Structure.FootballMatch;
 
 public class DatabaseTest {
 	
-	@Test
+	//@Test
 	public void testNames() throws IOException {
 		
 		DatabaseManager db = new DatabaseManager();
@@ -56,10 +56,10 @@ public class DatabaseTest {
 		int TeamAName = 1577;
 		int TeamBName = 1578;
 		
-		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,false);
-		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,false);
-		List<FootballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,true);
-		List<FootballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,true);
+		List<FootballMatch> TeamAWitoutTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,1);
+		List<FootballMatch> TeamBWithoutTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,1);
+		List<FootballMatch> TeamAAndTeamBMatchesResults = db.getMatchesResultsFromDatabase(TeamAName,TeamBName,2);
+		List<FootballMatch> TeamBAndTeamAMatchesResults = db.getMatchesResultsFromDatabase(TeamBName,TeamAName,2);
 		
 		
 		System.out.println("TeamAWitoutTeamBMatchesResults : ");
@@ -123,6 +123,29 @@ public class DatabaseTest {
 		
 		if (incommingMatches.size()>0){
 			db.addFinalMatchResultToDatabase(incommingMatches.get(0));
+		}
+		
+		db.closeConnection();
+	}
+	
+	@Test
+	public void test4() throws IOException {
+		DatabaseManager db = new DatabaseManager();
+		db.initConnection();
+		
+		List<FootballMatch> incommingMatches = db.getAllNewIncommingMatchesByPeriod("2015-12-26", "2015-12-30");
+		
+		System.out.println("incommingMatches List Size : "+incommingMatches.size());
+		
+		// How Many Iteration If Possible, If not k = incommingMatches.size()
+		int k = incommingMatches.size();
+		
+		if (incommingMatches.size()<k){
+			k = incommingMatches.size();
+		}
+		
+		for (int i=0;i<k;i++){
+			System.out.println(incommingMatches.get(i).returnMatchAsString());
 		}
 		
 		db.closeConnection();

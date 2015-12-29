@@ -6,14 +6,20 @@ import Analaser.Analyser;
 public class AnalyserTest {
 
 	@Test
-	public void test() throws IOException{
+	public void KMatchesAnalyseWithoutAddingToDatabase() throws IOException{
 		Analyser analyser = new Analyser();
 		
-		int k = 10;
-		analyser.init(k);
-		//System.out.println(parser.changeDate("Sunday 28 December 2014"));
+		int k = 1000000000;
+		analyser.init(k,false);
 		
-		analyser.CalculateMatchesResultsForKMatches(k);
+	}
+	
+	//@Test
+	public void KMatchesAnalyseAndAddingThemToDatabase() throws IOException{
+		Analyser analyser = new Analyser();
+		
+		int k = 2;
+		analyser.init(k,true);
 		
 	}
 
