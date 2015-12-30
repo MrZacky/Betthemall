@@ -18,15 +18,19 @@ import com.jcraft.jsch.Session;
 public class LogMaker {
 	
 	private static boolean logMakerOn = false;
+	private static boolean printLogInfoOnScreenWhenLogMakerFalse = false;
 	
 	private static LogMaker instance = null;
 	
 	private static File file = null;
 	
-	private static String SFTPHOST = "91.189.37.233";
+	//LogMaker was used for tests
+	// This data down are incorrect
+	
+	private static String SFTPHOST = "HOST";
 	private static int SFTPPORT = 22;
-	private static String SFTPUSER = "root";
-	private static String SFTPPASS = "Wakacje123";
+	private static String SFTPUSER = "USER";
+	private static String SFTPPASS = "PASSWORD";
 	private static String SFTPWORKINGDIR = "/root/betthemall/logs";
 
 	private static Session session = null;
@@ -101,7 +105,11 @@ public class LogMaker {
 			}
 		}
 		else{
-			//System.out.println(msg);
+			if (!logMakerOn){
+				if (printLogInfoOnScreenWhenLogMakerFalse){
+					System.out.println(msg);
+				}
+			}
 		}
     }
 

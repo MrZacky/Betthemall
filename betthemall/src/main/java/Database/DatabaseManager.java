@@ -18,11 +18,11 @@ import Structure.FootballMatch;
  */
 public class DatabaseManager {
 
-	private static final String HOST = "91.189.37.233";
+	private static final String HOST = "ec2-23-23-210-37.compute-1.amazonaws.com";
 	private static final String PORT = "5432";
-	private static final String DATABASE_NAME = "betthemalldb";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "wakacje";
+	private static final String DATABASE_NAME = "d51p1baokcdgcm";
+	private static final String USERNAME = "bdwqkpvebkleol";
+	private static final String PASSWORD = "QtZOLTMuD-13V1OOsw_dthxqRB";
 
 	private static final String DRIVER = "org.postgresql.Driver";
 	private static final String URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE_NAME;
