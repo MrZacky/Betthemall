@@ -159,8 +159,8 @@ public class Analyser {
 				efficiencyB += pointsForDraw * (1/dicreaser);
 			}
 
-			efficiencyA += pointsForGoal * scoreA;
-			efficiencyB += pointsForGoal * scoreB;
+			efficiencyA += pointsForGoal * scoreA * (1/dicreaser);
+			efficiencyB += pointsForGoal * scoreB * (1/dicreaser);
 		}
 		
 		dicreaser = 0;
